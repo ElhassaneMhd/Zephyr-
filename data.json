@@ -1,0 +1,21 @@
+{
+    "user": {
+        "name": "John",
+        "email": "",
+        "centre_id": 1,
+        "isSuperAdmin": "false"
+    },
+    "centre": {
+        "id": 1,
+        "name": "Centre 1"
+    },
+    "tables": {
+        "table_name": "hotel/app/club",
+        "name": "jardin",
+        "date": "2022-10-10",
+        "index": "51485.25",
+        "consummation": "120.52",
+        "puissance": "150/null",
+        "cos": "0.00/null"
+    }
+}
