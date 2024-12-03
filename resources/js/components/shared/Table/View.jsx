@@ -1,6 +1,6 @@
 import { useTable } from './useTable';
 import { BsTable, BsListCheck } from 'react-icons/bs';
-import { Button, CheckBox, DropDown } from '../../ui';
+import { Button, CheckBox, DropDown } from '@/components/ui';
 
 export function View() {
   const { columns, onChangeView, data,  disabled } = useTable();

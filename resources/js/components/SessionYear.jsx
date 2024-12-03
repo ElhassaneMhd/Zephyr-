@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { Button, CheckBox, Modal, SearchInput } from '../ui';
+import { Button, CheckBox, Modal, SearchInput } from './ui';
 import { useState } from 'react';
 import { useNavigate } from '@/hooks/useNavigate';
 

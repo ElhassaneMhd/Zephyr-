@@ -1,5 +1,5 @@
-import { Button } from '../ui';
-import { PiMoonStars, PiSunDim } from '../ui/Icons';
+import { Button } from './ui';
+import { PiMoonStars, PiSunDim } from './ui/Icons';
 import { useTheme } from '@/hooks';
 
 export function ThemeToggler({ layout }) {

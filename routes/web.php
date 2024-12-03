@@ -7,7 +7,16 @@ Route::fallback(function () {
 });
 
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect('/electricite/general');
+});
+
+Route::inertia('/electricite/general', 'Electricite/GeneralCounter');
+
+
+
+
+Route::fallback(function () {
+    return inertia('NotFound');
 });
 
 
