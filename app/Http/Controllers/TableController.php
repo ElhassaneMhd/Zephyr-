@@ -15,17 +15,31 @@ class TableController extends Controller
         $user = auth()->user();
         if ($user->isSuperAdmin === 'true'){
             $centres = Centre::all();
-            $tables = [];
+            $allTables = [];
             foreach ($centres as $centre){
-                $tables[$centre->name][] = $centre->tables;
+                $allTables[$centre->name][] = $centre->tables;
             }
         }else{
-            $tables = $user->centre->tables;
+            $allTables = $user->centre->tables;
         }
-            return Inertia::render('Tables',compact('tables'));
+        $tables = $this->refactorManyElements($allTables, 'tables');
+            return Inertia::render('Electricite/generalCounter',compact('tables'));
     }
 
-
+    public function getGenerale()
+    {
+        $user = auth()->user();
+        $general = $user->centre->tables->where('counter', 'general');
+        $tables = $this->refactorManyElements($general, 'tables');
+        return Inertia::render('Electricite/generalCounter',compact('tables'));
+    }
+    public function getDivisional()
+    {
+        $user = auth()->user();
+        $divisional = $user->centre->tables->where('counter', 'divisional');
+        $tables = $this->refactorManyElements($divisional, 'tables');
+        return Inertia::render('Electricite/divisionalCounter',compact('tables'));
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -35,11 +49,10 @@ class TableController extends Controller
             'index' => 'required,numeric',
             'consummation' => 'required,numeric',
             'centre_id' => 'required,exists:centres,id',
-            'compteur' => 'required,in:general,divisionnel',
+            'counter' => 'required,in:general,divisional',
         ]);
         Table::create($request->all());
-                return to_route(route: 'tables');
-
+            return to_route(route: 'tables');
     }
 
 
@@ -53,7 +66,7 @@ class TableController extends Controller
             'index' => 'required,numeric',
             'consummation' => 'required,numeric',
             'centre_id' => 'required,exists:centres,id',
-            'compteur' => 'required,in:general,divisionnel',
+            'counter' => 'required,in:general,divisional',
         ]);
         $table->update($request->all());
         return to_route(route: 'tables');

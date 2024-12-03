@@ -10,7 +10,8 @@ class CentreController extends Controller
 {
 
     public function index(){
-        $centres = Centre::all();
+        $allCentres = Centre::all();
+        $centres = $this->refactorManyElements($allCentres,'centres');
         return Inertia::render('Centres',compact('centres'));
     }
 

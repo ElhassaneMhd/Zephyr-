@@ -15,7 +15,7 @@ class Table extends Model
         'puissance',
         'cos',
         'centre_id',
-        'compteur'
+        'counter'
     ];
      public function centre()
     {
