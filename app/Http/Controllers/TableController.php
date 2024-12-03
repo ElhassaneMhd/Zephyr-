@@ -24,10 +24,6 @@ class TableController extends Controller
         }
             return Inertia::render('Tables',compact('tables'));
     }
-    public function create()
-    {
-        //
-    }
 
 
     public function store(Request $request)
@@ -42,25 +38,31 @@ class TableController extends Controller
             'compteur' => 'required,in:general,divisionnel',
         ]);
         Table::create($request->all());
+                return to_route(route: 'tables');
+
     }
 
-    public function show(Table $table)
+
+    public function update(Request $request, $id)
     {
-        //
+        $table = Table::findOrFail($id);
+        $request->validate([
+            'table_name' => 'required',
+            'name' => 'required',
+            'date' => 'required,date',
+            'index' => 'required,numeric',
+            'consummation' => 'required,numeric',
+            'centre_id' => 'required,exists:centres,id',
+            'compteur' => 'required,in:general,divisionnel',
+        ]);
+        $table->update($request->all());
+        return to_route(route: 'tables');
+
     }
 
-    public function edit(Table $table)
+    public function destroy($id)
     {
-        //
-    }
-
-    public function update(Request $request, Table $table)
-    {
-        //
-    }
-
-    public function destroy(Table $table)
-    {
-        //
+        $table = Table::findOrFail($id);
+        $table->delete();
     }
 }
