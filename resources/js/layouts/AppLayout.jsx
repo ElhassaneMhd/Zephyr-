@@ -1,5 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import Sidebar from '@/components/Back_Office/Sidebar';
+import Sidebar from '@/components/Sidebar';
 
 import '@/styles/App.css';
 

@@ -1,4 +1,4 @@
-import { SearchInput } from "../../ui";
+import { SearchInput } from "@/components/ui";
 import { useTable } from "./useTable";
 
 export function Search() {

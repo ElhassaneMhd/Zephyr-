@@ -1,8 +1,8 @@
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { MdDownload, PiFilePdf, PiFileCsv, IoChevronForwardOutline } from '../../ui/Icons';
-import { Button, DropDown } from '../../ui';
+import { MdDownload, PiFilePdf, PiFileCsv, IoChevronForwardOutline } from '@/components/ui/Icons';
+import { Button, DropDown } from '@/components/ui';
 import { useTable } from './useTable';
 import { IoDocumentOutline, IoDocumentsOutline } from 'react-icons/io5';
 import { HiOutlineClipboardDocumentCheck } from 'react-icons/hi2';
