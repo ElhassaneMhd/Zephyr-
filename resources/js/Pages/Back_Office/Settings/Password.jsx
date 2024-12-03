@@ -1,6 +1,6 @@
 import { useForm } from '@/hooks/useForm';
 import { useNavigate } from '@/hooks/useNavigate';
-import { ModalFormLayout } from '@/layouts/Back_Office/ModalFormLayout';
+import { ModalFormLayout } from '@/layouts/ModalFormLayout';
 import { RULES } from '@/utils/constants';
 
 export default function Password() {

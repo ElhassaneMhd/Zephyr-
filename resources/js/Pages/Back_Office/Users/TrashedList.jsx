@@ -1,4 +1,4 @@
-import PageLayout from '@/layouts/Back_Office/PageLayout';
+import PageLayout from '@/layouts/PageLayout';
 import UsersList from './UsersList';
 
 export default function TrashedList({ data = [], additionalData = {} }) {

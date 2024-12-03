@@ -1,6 +1,6 @@
 import { Avatar } from '@/components/Back_Office/DropDownProfile';
 import { Button } from '@/components/ui';
-import { ModalFormLayout } from '@/layouts/Back_Office/ModalFormLayout';
+import { ModalFormLayout } from '@/layouts/ModalFormLayout';
 import { HiMiniXMark } from 'react-icons/hi2';
 import { useForm, useUploadFile, useUser } from '@/hooks/index';
 import { useNavigate } from '@/hooks/useNavigate';

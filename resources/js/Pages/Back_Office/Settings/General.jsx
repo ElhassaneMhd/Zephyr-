@@ -1,5 +1,5 @@
 import { useForm, useUploadFile } from '@/hooks/index';
-import { ModalFormLayout } from '@/layouts/Back_Office/ModalFormLayout';
+import { ModalFormLayout } from '@/layouts/ModalFormLayout';
 import { FaCamera } from 'react-icons/fa6';
 import { BsFillInfoCircleFill } from 'react-icons/bs';
 import { ToolTip } from '@/components/ui';

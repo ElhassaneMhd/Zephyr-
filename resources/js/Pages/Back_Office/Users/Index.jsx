@@ -1,5 +1,5 @@
 import UsersList from './UsersList';
-import PageLayout from '@/layouts/Back_Office/PageLayout';
+import PageLayout from '@/layouts/PageLayout';
 
 export default function Index({ users = [], roles=[] }) {
   return (

@@ -1,4 +1,4 @@
-import { TableLayout } from '@/layouts/Back_Office/TableLayout';
+import { TableLayout } from '@/layouts/TableLayout';
 import { useOptions } from '../Shared';
 import { filterObject, getFilter } from '@/utils/helpers';
 

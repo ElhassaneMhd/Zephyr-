@@ -1,4 +1,4 @@
-import PageLayout from '@/layouts/Back_Office/PageLayout';
+import PageLayout from '@/layouts/PageLayout';
 import PieChartStats, { Legend, createCustomTooltip } from './PieChart';
 import { Bar, BarChart, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useNavigate } from '@/hooks/useNavigate';

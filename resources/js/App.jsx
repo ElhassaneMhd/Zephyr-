@@ -11,7 +11,7 @@ import { ConfirmationModalProvider } from './context/ConfirmationModal';
 import { i18n } from './i18n/config';
 import NotFound from './Pages/NotFound';
 import Settings from './Pages/Back_Office/Settings/Settings';
-import BackAppLayout from './layouts/Back_Office/AppLayout';
+import BackAppLayout from './layouts/AppLayout';
 import FrontAppLayout from './layouts/Front_End/AppLayout';
 
 createInertiaApp({
