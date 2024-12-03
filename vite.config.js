@@ -8,4 +8,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {
+            "@/styles": "/resources/css",
+            "@": "/resources/js",
+        },
+    },
 });
