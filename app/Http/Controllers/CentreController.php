@@ -12,14 +12,8 @@ class CentreController extends Controller
     public function index(){
         $allCentres = Centre::all();
         $centres = $this->refactorManyElements($allCentres,'centres');
-        return Inertia::render('Centres',compact('centres'));
+        return response()->json($centres);
     }
-
-    public function create()
-    {
-
-    }
-
 
     public function store(Request $request)
     {
@@ -29,17 +23,13 @@ class CentreController extends Controller
         Centre::create($request->all());
         return to_route('centres.index');
     }
-    public function show(Centre $centre)
-    {
 
+    public function getAccess($id){
+        $user = auth()->user();
+        $user->centre_id = $id;
+        $user->save();
+        return response()->json(["message"=>"Access granted"]);
     }
-
-
-    public function edit(Centre $centre)
-    {
-        //
-    }
-
 
     public function update(Request $request,$id)
     {

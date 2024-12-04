@@ -20,58 +20,38 @@ class TableController extends Controller
                     $tables[$centre->name] = $this->refactorManyElements($centre->tables, 'tables');
                 }
             }
-            return response()->json($tables);
         }else{
             $allTables = $user->centre->tables;
             $tables = $this->refactorManyElements($allTables, 'tables');
         }
-        return Inertia::render('Electricite/generalCounter',compact('tables'));
+        return response()->json($tables);
     }
 
     public function getGenerale()
     {
         $user = auth()->user();
-         if ($user->isSuperAdmin == 'true'){
-            $centres = Centre::all();
-            foreach ($centres as $centre) {
-                $generalTables = $centre->tables->where('counter', 'general');
-                if ($generalTables->count() !== 0) {
-                    $tables[$centre->name] = $this->refactorManyElements($generalTables, 'tables');
-                }
-            }
-        }else{
-            $general = $user->centre->tables->where('counter', 'general');
-            $tables = $this->refactorManyElements($general, 'tables');
-        }
-       return Inertia::render('Electricite/GeneralCounter',compact('tables'));
+        $general = $user->centre->tables->where('counter', 'general');
+        $tables = $this->refactorManyElements($general, 'tables');
+        return Inertia::render('Electricite/GeneralCounter',compact('tables'));
     }
     public function getDivisional()
     {
-            $user = auth()->user();
-         if ($user->isSuperAdmin == 'true'){
-            $centres = Centre::all();
-            foreach ($centres as $centre) {
-                $divisionalTables = $centre->tables->where('counter', 'divisional');
-                if ($divisionalTables->count() !== 0) {
-                    $tables[$centre->name] = $this->refactorManyElements($divisionalTables, 'tables');
-                }
-            }
-        }else{
-            $general = $user->centre->tables->where('counter', 'divisional');
-            $tables = $this->refactorManyElements($general, 'tables');
-        }
+        $user = auth()->user();
+        $general = $user->centre->tables->where('counter', 'divisional');
+        $tables = $this->refactorManyElements($general, 'tables');
         return Inertia::render('Electricite/DivisionalCounter',compact('tables'));
-
     }
+
     public function store(Request $request)
     {
+        $centre = $request->user()->centre;
         $request->validate([
             'table_name' => 'required',
             'name' => 'required',
             'date' => 'required,date',
             'index' => 'required,numeric',
             'consummation' => 'required,numeric',
-            'centre_id' => 'required,exists:centres,id',
+            'centre_id' => $centre->id,
             'counter' => 'required,in:general,divisional',
         ]);
         Table::create($request->all());
@@ -83,13 +63,11 @@ class TableController extends Controller
     {
         $table = Table::findOrFail($id);
         $request->validate([
-            'table_name' => 'required',
             'name' => 'required',
             'date' => 'required,date',
             'index' => 'required,numeric',
+            'puissance' => 'required,numeric',
             'consummation' => 'required,numeric',
-            'centre_id' => 'required,exists:centres,id',
-            'counter' => 'required,in:general,divisional',
         ]);
         $table->update($request->all());
         return redirect()->back();
