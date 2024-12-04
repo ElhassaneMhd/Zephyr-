@@ -15,6 +15,7 @@ trait Refactor
     }
     protected function refactorTable($table)
     {
+        $centre = $table->centre;
         return [
             'id' => $table->id,
             'table_name' => $table->table_name,
@@ -22,9 +23,10 @@ trait Refactor
             'date' => $table->date,
             'index' => $table->index,
             'consummation' => $table->consummation,
-            'centre_id' => $table->centre_id,
-            'counter' => $table->counter,
             "cos" => $table->cos,
+            "puissance" => $table->puissance,
+            'centre_id' => $table->centre_id,
+            'counter' => $centre->name,
             'created_at' => $table->created_at,
             'updated_at' => $table->updated_at,
         ];

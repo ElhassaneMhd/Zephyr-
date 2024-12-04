@@ -8,12 +8,6 @@ Route::get('/', function () {
     return redirect('/electricite/general');
 });
 
-// Route::inertia('/electricite/general', 'Electricite/GeneralCounter');
-
-
-
-
-
 require __DIR__ . '/auth.php';
 
 Route::fallback(function () {

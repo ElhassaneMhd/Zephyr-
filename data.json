@@ -10,12 +10,47 @@
         "name": "Centre 1"
     },
     "tables": {
-        "table_name": "hotel/app/club",
+        "table_name": "hotel-appartement-club",
         "name": "jardin",
         "date": "2022-10-10",
         "index": "51485.25",
         "consummation": "120.52",
-        "puissance": "150/null",
-        "cos": "0.00/null"
+        "puissance": "150-null",
+        "cos": "0.00-null",
+        "centre_id": 1,
+        "counter": "general,divisional"
+    },
+    "refator": {
+        "user": {
+            "id": 1,
+            "name": "John",
+            "email": "",
+            "centre": "refactored.centre",
+            "isSuperAdmin": "false",
+            "created_at": "2022-10-10",
+            "updated_at": "2022-10-10"
+        },
+        "centre": {
+            "id": 1,
+            "name": "Centre 1",
+            "created_at": "2022-10-10",
+            "updated_at": "2022-10-10",
+            "users": [{ "id": "", "name": "", "email": "" }],
+            "tables": ["refactored.tables"]
+        },
+        "tables": {
+            "id": 1,
+            "table_name": "hotel-appartement-club",
+            "name": "jardin",
+            "date": "2022-10-10",
+            "index": "51485.25",
+            "consummation": "120.52",
+            "puissance": "150-null",
+            "cos": "0.00-null",
+            "created_at": "2022-10-10",
+            "updated_at": "2022-10-10",
+            "counter": "general,divisional",
+            "centre": "centre.name"
+        }
     }
 }
