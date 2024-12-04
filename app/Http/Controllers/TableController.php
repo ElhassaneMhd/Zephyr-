@@ -30,14 +30,14 @@ class TableController extends Controller
     public function getGenerale()
     {
         $user = auth()->user();
-        $general = $user->centre->tables->where('counter', 'general');
+        $general = $user->centre->tables->where('counter', 'general')??[];
         $tables = $this->refactorManyElements($general, 'tables');
         return Inertia::render('Electricite/GeneralCounter',compact('tables'));
     }
     public function getDivisional()
     {
         $user = auth()->user();
-        $general = $user->centre->tables->where('counter', 'divisional');
+        $general = $user->centre->tables->where('counter', 'divisional')??[];
         $tables = $this->refactorManyElements($general, 'tables');
         return Inertia::render('Electricite/DivisionalCounter',compact('tables'));
     }
