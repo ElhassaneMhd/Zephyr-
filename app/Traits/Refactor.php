@@ -7,7 +7,7 @@ trait Refactor
     protected function refactorManyElements($elements, $data)
     {
         foreach ($elements as $element) {
-            ($data === 'tables') && $all[] = $this->refactorTable($element);
+            ($data === 'tables') && $all[$element->table_name][] = $this->refactorTable($element);
             ($data === 'users') && $all[] = $this->refactorUser($element);
             ($data === 'centres') && $all[] = $this->refactorCentre($element);
         }
@@ -18,15 +18,14 @@ trait Refactor
         $centre = $table->centre;
         return [
             'id' => $table->id,
-            'table_name' => $table->table_name,
             'name' => $table->name,
             'date' => $table->date,
             'index' => $table->index,
             'consummation' => $table->consummation,
             "cos" => $table->cos,
             "puissance" => $table->puissance,
-            'centre_id' => $table->centre_id,
-            'counter' => $centre->name,
+            'centre' => $centre->name,
+            'counter' => $table->counter,
             'created_at' => $table->created_at,
             'updated_at' => $table->updated_at,
         ];
