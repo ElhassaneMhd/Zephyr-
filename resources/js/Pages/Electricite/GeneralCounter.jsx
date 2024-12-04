@@ -3,12 +3,11 @@ import { TableLayout } from "@/layouts/TableLayout";
 import { formatDate } from "@/utils/helpers";
 import { useState } from "react";
 
-const centre = "Mazagan";
-
 export default function GeneralCounter({ tables }) {
-    const [current, setCurrent] = useState(Object.keys(tables[centre])[0]);
-
     console.log(tables);
+    const [current, setCurrent] = useState(
+        tables ? Object.keys(tables)[0] : null,
+    );
 
     return (
         <>
@@ -17,7 +16,7 @@ export default function GeneralCounter({ tables }) {
                     Compteur General
                 </h1>
                 <Tabs
-                    tabs={Object.keys(tables[centre])}
+                    tabs={Object.keys(tables)}
                     onChange={(v) => setCurrent(v)}
                 />
             </div>
@@ -25,7 +24,7 @@ export default function GeneralCounter({ tables }) {
                 key={current}
                 routeName="general"
                 resourceName="General"
-                data={tables[centre]?.[current] || []}
+                data={tables?.[current] || []}
                 columns={[
                     {
                         key: "name",
@@ -65,6 +64,51 @@ export default function GeneralCounter({ tables }) {
                         type: "number",
                     },
                 ]}
+                formFields={[
+                    {
+                        name: "name",
+                        label: "Name",
+                    },
+                    {
+                        name: "date",
+                        label: "Date",
+                        type: "date",
+                    },
+                    {
+                        name: "index",
+                        label: "Index",
+                        type: "index",
+                    },
+                    {
+                        name: "consummation",
+                        label: "Consommation",
+                        type: "number",
+                    },
+                    {
+                        name: "puissance",
+                        label: "Puissance",
+                        type: "number",
+                    },
+                    {
+                        name: "cos",
+                        label: "COS Phi",
+                        type: "number",
+                    },
+                ]}
+                formDefaults={{
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    phone: "",
+                    gender: "M",
+                    academicLevel: "Bac+2",
+                    establishment: "",
+                    specialty: "",
+                    startDate: "",
+                    endDate: "",
+                    password: "",
+                    password_confirmation: "",
+                }}
                 // {...options}
                 fieldsToSearch={["name"]}
                 // selectedOptions={{
