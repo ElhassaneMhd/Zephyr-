@@ -19,7 +19,6 @@ export function Table({
         query,
         appliedFiltersNumber,
         data,
-        isTrashed,
     } = useTable();
     const table = useRef();
     const [parent] = useAutoAnimate({ duration: 500 });
@@ -34,11 +33,7 @@ export function Table({
     if (rows?.length === 0 && !query && !appliedFiltersNumber("all")) {
         return (
             <div className="absolute grid h-full w-full place-content-center place-items-center gap-5 pt-5">
-                <img
-                    src={`/images/${isTrashed ? "trash.png" : "empty.svg"}`}
-                    alt=""
-                    className="w-[100px]"
-                />
+                <img src="/images/empty.svg" alt="" className="w-[100px]" />
                 <div className="space-y-2 text-center">
                     <h2 className="font-medium text-text-primary">
                         {data?.length === 0
@@ -47,9 +42,7 @@ export function Table({
                     </h2>
                     <p className="text-sm text-text-secondary">
                         {data?.length === 0
-                            ? isTrashed
-                                ? "There are currently no trashed records to display in this table."
-                                : "There are currently no records to display in this table."
+                            ? "There are currently no records to display in this table."
                             : "The page you&apos;re trying to access doesn&apos;t exist."}
                     </p>
                 </div>

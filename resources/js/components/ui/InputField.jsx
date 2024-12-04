@@ -7,13 +7,7 @@ import {
   IoCalendarNumberOutline,
   FiPhone,
   MdDriveFileRenameOutline,
-  BsBuilding,
   MdError,
-  IoSchool,
-  FaCity,
-  MdOutlineTimelapse,
-  IoLocationOutline,
-  GrMapLocation,
 } from './Icons';
 import { cn } from '../../utils/helpers';
 import { tv } from 'tailwind-variants';
@@ -35,12 +29,6 @@ const icons = {
   text: <MdDriveFileRenameOutline />,
   date: <IoCalendarNumberOutline />,
   'datetime-local': <IoCalendarNumberOutline />,
-  establishment: <BsBuilding />,
-  academicLevel: <IoSchool />,
-  city: <FaCity />,
-  duration: <MdOutlineTimelapse />,
-  location: <IoLocationOutline />,
-  maps: <GrMapLocation />,
 };
 
 function Label({ label, message }) {

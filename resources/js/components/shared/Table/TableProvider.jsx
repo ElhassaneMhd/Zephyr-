@@ -1,17 +1,15 @@
-import { useState } from 'react';
-import { Table } from './Table';
-import { Search } from './Search';
-import { View } from './View';
-import { Pagination } from './Pagination';
-import { Download } from './Download';
-import { Actions } from './Actions';
-import { Selected } from './Selected';
-import { TableContext } from './useTable';
-import { NewRecord } from './NewRecord';
-import { useMethods } from '@/hooks/useMethods';
-
-
-
+import { useState } from "react";
+import { Table } from "./Table";
+import { Search } from "./Search";
+import { View } from "./View";
+import { Pagination } from "./Pagination";
+import { Download } from "./Download";
+import { Actions } from "./Actions";
+import { Selected } from "./Selected";
+import { TableContext } from "./useTable";
+import { NewRecord } from "./NewRecord";
+import { useMethods } from "@/hooks/useMethods";
+import { TableRecord } from "./TableRecord";
 
 /**
  * TableProvider component.
@@ -35,145 +33,199 @@ import { useMethods } from '@/hooks/useMethods';
  * @returns {React.ElementType} Returns a TableContext.Provider component with the TableProvider component.
  */
 export function TableProvider({
-  children,
-  data,
-  resourceName,
-  routeName,
-  columns: tableColumns,
-  filters: defaultFilters,
-  selectedOptions: defaultSelectedOptions,
-  fieldsToSearch,
-  defaultSortBy,
-  defaultDirection,
-  downloadOptions,
-  displayAllData,
-  isTrashed,
-}) {
-  const [columns, setColumns] = useState(tableColumns);
-  const [selected, setSelected] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState({
-    isOpen: false,
-    actions: defaultSelectedOptions?.actions || [],
-    deleteOptions: defaultSelectedOptions?.deleteOptions,
-  });
-
-  const {
-    query,
-    page,
-    limit,
-    sortBy,
-    direction,
-    filters,
-    onSearch,
-    onPaginate,
-    onChangeLimit,
-    onOrder,
-    onSort,
-    onFilter,
-    appliedFiltersNumber,
-  } = useMethods({
-    defaultSortBy,
-    defaultDirection,
-    defaultFilters,
-  });
-
-  // Variables
-  const rows = data?.search(query, fieldsToSearch).customFilter(filters, 'AND').customSort(sortBy, direction, columns);
-
-  const totalItems = rows?.length;
-  const totalPages = Math.ceil(totalItems / limit);
-
-  const excludedFields = columns.filter((c) => !c.visible).map((c) => c.displayLabel);
-
-  const csvConfig = {
-    filename: downloadOptions?.csvFileName || resourceName,
-    columnHeaders: columns.filter((c) => !excludedFields.includes(c.displayLabel)),
-  };
-  const pdfConfig = {
-    filename: downloadOptions?.pdfFileName || resourceName,
-    tableHeaders: columns.map((c) => c.displayLabel).filter((c) => !excludedFields.includes(c)),
-  };
-
-  const confirmOptions = {
-    message: `Are you sure you want to delete this ${resourceName.toLowerCase()} ?`,
-    title: `Delete ${resourceName}`,
-    confirmText: 'Delete',
-  };
-
-  // Handlers
-
-  const onChangeView = (column, showAll) => {
-    if (showAll) return setColumns(columns.map((c) => ({ ...c, visible: true })));
-
-    setColumns(
-      columns.map((c) => {
-        const visible = columns.filter((co) => co.visible).length === 1 ? true : !c.visible;
-
-        return c.displayLabel === column ? { ...c, visible } : c;
-      })
-    );
-  };
-
-  const onSelect = (id, isAll) => {
-    setSelected((prev) => {
-      const selected = prev.includes(id) ? (isAll ? prev : prev.filter((s) => s !== id)) : [...prev, id];
-      setSelectedOptions((prev) => ({
-        ...prev,
-        isOpen: selected.length > 0,
-        onClose: () => setSelectedOptions((p) => ({ ...p, isOpen: false })),
-      }));
-      return selected;
-    });
-  };
-
-  // Context value
-  const context = {
-    // data
+    children,
     data,
     resourceName,
     routeName,
-    // table
-    tableColumns,
-    columns,
-    rows: displayAllData ? rows : rows?.paginate(page, limit),
-    disabled: data?.length === 0 || (page > totalPages && !query && !appliedFiltersNumber('all')),
-    // Selection
-    selected,
-    isSelecting: selected.length > 0,
-    selectedOptions,
-    onSelect,
-    // search
-    query,
-    onSearch,
-    // filter
-    filters,
-    appliedFiltersNumber,
-    onFilter,
-    // pagination
-    totalItems,
-    totalPages,
-    page,
-    limit,
-    onChangeLimit,
-    onPaginate,
-    // view
-    onChangeView,
-    // sort
-    sortBy,
-    direction,
-    onSort: (sortBy, direction) => {
-      onSort(sortBy);
-      onOrder(direction);
-    },
-    // download
-    csvConfig,
-    pdfConfig,
-    // other
-    confirmOptions,
-    isTrashed,
-  };
+    columns: tableColumns,
+    filters: defaultFilters,
+    selectedOptions: defaultSelectedOptions,
+    formFields,
+    formDefaults,
+    fieldsToSearch,
+    defaultSortBy,
+    defaultDirection,
+    downloadOptions,
+    displayAllData,
+}) {
+    const [columns, setColumns] = useState(tableColumns);
+    const [selected, setSelected] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState({
+        isOpen: false,
+        actions: defaultSelectedOptions?.actions || [],
+        deleteOptions: defaultSelectedOptions?.deleteOptions,
+    });
+    const [formOptions, setFormOptions] = useState({
+        defaultValues: formDefaults,
+        fields: formFields,
+        onSubmit: () => {},
+        resetToDefault: true,
+        gridLayout: true,
+        submitButtonText: "",
+        heading: "",
+        isOpen: false,
+        type: "create",
+    });
 
-  return <TableContext.Provider value={context}>{children}</TableContext.Provider>;
+    const {
+        query,
+        page,
+        limit,
+        sortBy,
+        direction,
+        filters,
+        onSearch,
+        onPaginate,
+        onChangeLimit,
+        onOrder,
+        onSort,
+        onFilter,
+        appliedFiltersNumber,
+    } = useMethods({
+        defaultSortBy,
+        defaultDirection,
+        defaultFilters,
+    });
+
+    // Variables
+    const rows = data
+        ?.search(query, fieldsToSearch)
+        .customFilter(filters, "AND")
+        .customSort(sortBy, direction, columns);
+
+    const totalItems = rows?.length;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    const excludedFields = columns
+        .filter((c) => !c.visible)
+        .map((c) => c.displayLabel);
+
+    const csvConfig = {
+        filename: downloadOptions?.csvFileName || resourceName,
+        columnHeaders: columns.filter(
+            (c) => !excludedFields.includes(c.displayLabel),
+        ),
+    };
+    const pdfConfig = {
+        filename: downloadOptions?.pdfFileName || resourceName,
+        tableHeaders: columns
+            .map((c) => c.displayLabel)
+            .filter((c) => !excludedFields.includes(c)),
+    };
+
+    const confirmOptions = {
+        message: `Are you sure you want to delete this ${resourceName.toLowerCase()} ?`,
+        title: `Delete ${resourceName}`,
+        confirmText: "Delete",
+    };
+
+    // Handlers
+
+    const onChangeView = (column, showAll) => {
+        if (showAll)
+            return setColumns(columns.map((c) => ({ ...c, visible: true })));
+
+        setColumns(
+            columns.map((c) => {
+                const visible =
+                    columns.filter((co) => co.visible).length === 1
+                        ? true
+                        : !c.visible;
+
+                return c.displayLabel === column ? { ...c, visible } : c;
+            }),
+        );
+    };
+
+    const onSelect = (id, isAll) => {
+        setSelected((prev) => {
+            const selected = prev.includes(id)
+                ? isAll
+                    ? prev
+                    : prev.filter((s) => s !== id)
+                : [...prev, id];
+            setSelectedOptions((prev) => ({
+                ...prev,
+                isOpen: selected.length > 0,
+                onClose: () =>
+                    setSelectedOptions((p) => ({ ...p, isOpen: false })),
+            }));
+            return selected;
+        });
+    };
+
+    const showForm = (options) => {
+        setFormOptions((prev) => ({
+            ...prev,
+            ...options,
+            close: () => {
+                setFormOptions((prev) => ({
+                    ...prev,
+                    isOpen: false,
+                    defaultValues: formDefaults,
+                    heading: "",
+                    submitButtonText: "",
+                }));
+            },
+        }));
+    };
+
+    // Context value
+    const context = {
+        // data
+        data,
+        resourceName,
+        routeName,
+        // table
+        tableColumns,
+        columns,
+        rows: displayAllData ? rows : rows?.paginate(page, limit),
+        disabled:
+            data?.length === 0 ||
+            (page > totalPages && !query && !appliedFiltersNumber("all")),
+        // Selection
+        selected,
+        isSelecting: selected.length > 0,
+        selectedOptions,
+        onSelect,
+        // search
+        query,
+        onSearch,
+        // filter
+        filters,
+        appliedFiltersNumber,
+        onFilter,
+        // pagination
+        totalItems,
+        totalPages,
+        page,
+        limit,
+        onChangeLimit,
+        onPaginate,
+        // view
+        onChangeView,
+        // sort
+        sortBy,
+        direction,
+        onSort: (sortBy, direction) => {
+            onSort(sortBy);
+            onOrder(direction);
+        },
+        // download
+        csvConfig,
+        pdfConfig,
+        // other
+        formOptions,
+        formFields,
+        showForm,
+        confirmOptions,
+    };
+
+    return (
+        <TableContext.Provider value={context}>
+            {children}
+        </TableContext.Provider>
+    );
 }
 
 TableProvider.Table = Table;
@@ -182,5 +234,6 @@ TableProvider.View = View;
 TableProvider.Download = Download;
 TableProvider.Pagination = Pagination;
 TableProvider.NewRecord = NewRecord;
+TableProvider.TableRecord = TableRecord;
 TableProvider.Actions = Actions;
 TableProvider.Selected = Selected;

@@ -1,13 +1,16 @@
 import Tabs from "@/components/ui/Tabs";
+import { useNavigate } from "@/hooks";
 import { TableLayout } from "@/layouts/TableLayout";
 import { formatDate } from "@/utils/helpers";
 import { useState } from "react";
 
-export default function GeneralCounter({ tables }) {
+export default function General({ tables }) {
     console.log(tables);
     const [current, setCurrent] = useState(
         tables ? Object.keys(tables)[0] : null,
     );
+    const navigate = useNavigate();
+    const resourceName = "electricite-general";
 
     return (
         <>
@@ -23,7 +26,7 @@ export default function GeneralCounter({ tables }) {
             <TableLayout
                 key={current}
                 routeName="general"
-                resourceName="General"
+                resourceName={resourceName}
                 data={tables?.[current] || []}
                 columns={[
                     {
@@ -68,60 +71,93 @@ export default function GeneralCounter({ tables }) {
                     {
                         name: "name",
                         label: "Name",
+                        parentClassName: "col-span-2",
+                        showIcon: false,
+                    },
+                    {
+                        name: "prev_date",
+                        label: "Date Precedant",
+                        type: "datetime-local",
+                        readOnly: true,
+                        showIcon: false,
+                    },
+                    {
+                        name: "prev_index",
+                        label: "Index Precedant",
+                        type: "number",
+                        step: ".01",
+                        readOnly: true,
                     },
                     {
                         name: "date",
                         label: "Date",
-                        type: "date",
+                        type: "datetime-local",
+                        showIcon: false,
                     },
                     {
                         name: "index",
                         label: "Index",
-                        type: "index",
+                        type: "number",
+                        min: 0,
+                        step: ".01",
                     },
                     {
                         name: "consummation",
                         label: "Consommation",
                         type: "number",
+                        min: 0,
+                        step: ".01",
+                        parentClassName: "col-span-2",
+                        readOnly: true,
+                        format: (val) => parseFloat(val).toFixed(2),
+                        calculate: (values) => values.index - values.prev_index,
                     },
                     {
                         name: "puissance",
                         label: "Puissance",
                         type: "number",
+                        min: 0,
                     },
                     {
                         name: "cos",
                         label: "COS Phi",
                         type: "number",
+                        min: 0,
+                        step: ".0001",
                     },
                 ]}
                 formDefaults={{
-                    firstName: "",
-                    lastName: "",
-                    email: "",
-                    phone: "",
-                    gender: "M",
-                    academicLevel: "Bac+2",
-                    establishment: "",
-                    specialty: "",
-                    startDate: "",
-                    endDate: "",
-                    password: "",
-                    password_confirmation: "",
+                    name: "",
+                    prev_date: "2024-12-13T23:01",
+                    prev_index: 454867.12,
+                    date: "",
+                    index: 564848.12,
+                    consummation: 0,
+                    puissance: 0,
+                    cos: 0,
                 }}
-                // {...options}
                 fieldsToSearch={["name"]}
-                // selectedOptions={{
-                //     deleteOptions: options.selectedOptions.deleteOptions,
-                // }}
+                selectedOptions={{
+                    deleteOptions: {
+                        resourceName,
+                        onConfirm: (ids) =>
+                            navigate({
+                                url: "general.multiple.destroy",
+                                method: "post",
+                                data: { ids },
+                            }),
+                    },
+                }}
                 // filters={{
                 //   ...filterObject(options.filters, ['created_at'], 'include'),
                 //   ...getFilter('role', roles, 'name'),
                 // }}
                 layoutOptions={{
-                    //   actions: (def) => [...(isTrashed ? [def.restore] : [def.edit]), def.delete],
-                    displayNewRecord: false,
+                    actions: (def) => [def.edit, def.delete],
+                    // displayNewRecord: false,
                 }}
+                onAdd={console.log}
+                onUpdate={console.log}
             />
         </>
     );
