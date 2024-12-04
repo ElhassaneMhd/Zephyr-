@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use App\Observers\TableObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+
+
+#[ObservedBy([TableObserver::class])]
 
 class Table extends Model
 {
@@ -22,5 +27,9 @@ class Table extends Model
      public function centre()
     {
         return $this->belongsTo(Centre::class);
+    }
+    public function historics()
+    {
+        return $this->hasMany(Historic::class);
     }
 }

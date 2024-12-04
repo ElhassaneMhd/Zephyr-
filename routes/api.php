@@ -1,5 +1,3 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-Route::get('/tables', 'App\Http\Controllers\TableController@index');
+Route::get('/tables', 'App\Http\Controllers\TableController@index')->middleware('auth');

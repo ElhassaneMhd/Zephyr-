@@ -40,7 +40,7 @@ class AuthController extends Controller{
         Auth::logout();
         Cookie::queue(Cookie::forget('laravel_session'));
         Cookie::queue(Cookie::forget('XSRF-TOKEN'));
-        return to_route('login');
+        return to_route('formLogin');
     }
     public function user(Request $request) {
         $user = auth()->user();

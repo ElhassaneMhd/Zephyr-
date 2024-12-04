@@ -2,11 +2,15 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Centre;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Traits\Refactor;
+
 
 class HandleInertiaRequests extends Middleware
 {
+    use Refactor;
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -35,8 +39,27 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+       if( auth()->check()){
+
+           if( $request->user()->isSuperAdmin == "true") {
+               $centres = Centre::all();
+                $centre = [];
+                foreach ($centres as $c){
+                    $centre[] = ["id"=>$c->id, "name"=>$c->name];
+                }
+            }else{
+                $centre=$request->user()->centre->name;
+            }
+        }
         return array_merge(parent::share($request), [
-            //
-        ]);
+            'auth' => auth()->check() ? ([
+                "id" => $request->user()->id,
+                "name" => $request->user()->name,
+                "email" => $request->user()->email,
+                "isSuperAdmin" => $request->user()->isSuperAdmin,
+                "centres" => $centre,
+            ]) : null,
+            ]
+        );
     }
 }
