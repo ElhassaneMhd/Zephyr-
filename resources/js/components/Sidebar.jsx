@@ -12,7 +12,6 @@ import {
 import { Button } from "./ui";
 import { ThemeToggler } from "./ThemeToggler";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import CurrentUser from "./CurrentUser";
 import { useConfirmationModal, useNavigate } from "@/hooks";
 
 const routes = [
@@ -20,8 +19,8 @@ const routes = [
         icon: <IoHomeOutline />,
         label: "Électricité",
         sub: [
-            { label: "General", href: "/electricite/general" },
-            { label: "Divisionnel", href: "/electricite/divisionnel" },
+            { label: "Compteur General", href: "/electricite/general" },
+            { label: "Compteur Divisionnel", href: "/electricite/divisionnel" },
         ],
     },
     { icon: <IoHomeOutline />, label: "Eau", href: "/eau" },
@@ -60,7 +59,11 @@ export default function Sidebar() {
                         isExpanded ? "w-20 flex-1 scale-100" : "h-0 w-0 scale-0"
                     }
                 >
-                    <CurrentUser />
+                    <img
+                        className="h-9  object-cover text-center text-xs text-text-tertiary"
+                        src="/img/logozd.webp"
+                        alt="profile image"
+                    />
                 </div>
                 <Button
                     shape="icon"
@@ -104,7 +107,7 @@ export default function Sidebar() {
                                 confirmText: "Logout",
                                 onConfirm: () =>
                                     navigate({
-                                        url: "/admin/logout",
+                                        url: "/logout",
                                         method: "POST",
                                     }),
                             });

@@ -20,20 +20,11 @@ export default function CurrentUser() {
     );
 }
 
-export function Avatar({ avatar, role, className = "h-9 w-9" }) {
-    const getFallback = (role, gender = "M") => {
-        if (["user", "intern"].includes(role))
-            return gender === "M" ? "/images/male.png" : "/images/female.png";
-        if (["super-admin", "admin", "supervisor"].includes(role))
-            return gender === "M"
-                ? "/images/male-admin.png"
-                : "/images/female-admin.png";
-    };
-
+export function Avatar({ className = "h-9 w-9" }) {
     return (
         <img
             className={`rounded-full border border-border object-cover text-center text-xs text-text-tertiary ${className}`}
-            src={avatar || getFallback(role)}
+            src="/img/logozd.webp"
             alt="profile image"
         />
     );

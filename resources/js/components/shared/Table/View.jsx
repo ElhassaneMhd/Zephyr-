@@ -26,11 +26,11 @@ export function View() {
       </DropDown.Option>
       <DropDown.Divider />
 
-      {columns.map(({ displayLabel, visible }) => {
+      {columns.map(({ key,displayLabel, visible }) => {
         const disabled = visible && columns.filter((c) => c.visible).length === 1;
 
         return (
-          <DropDown.Option key={displayLabel} className='justify-between' disabled={disabled}>
+          <DropDown.Option key={key} className='justify-between' disabled={disabled}>
             {displayLabel}
             <CheckBox checked={visible} onChange={() => onChangeView(displayLabel)} disabled={disabled} />
           </DropDown.Option>

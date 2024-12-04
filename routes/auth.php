@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
         return redirect('/general');
     });
     Route::get('/electricite/general', [TableController::class ,'getGenerale'])->name('general');
-    Route::get('/electricite/division', [TableController::class ,'getDivisional'])->name('division');
+    Route::get('/electricite/divisionnel', [TableController::class ,'getDivisional'])->name('division');
     Route::post('/electricite/store', [TableController::class ,'store'])->name('store');
     Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name('update');
     Route::delete('/electricite/delete/{id}', [TableController::class ,'delete'])->name('delete');

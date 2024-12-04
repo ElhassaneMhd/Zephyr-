@@ -15,7 +15,6 @@ createInertiaApp({
         const pages = import.meta.glob("./Pages/**/*.jsx", { eager: true });
         const page = pages[`./Pages/${name}.jsx`];
 
-        console.log(page);
 
         if (!page) return NotFound;
 

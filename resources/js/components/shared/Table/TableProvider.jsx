@@ -15,6 +15,7 @@ import { useMethods } from '@/hooks/useMethods';
 
 /**
  * TableProvider component.
+ * Made By Walid Zakan => https://github.com/Zawalid
  *
  * @component
  *
