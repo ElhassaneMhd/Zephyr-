@@ -6,16 +6,20 @@ use App\Http\Middleware\CheckSuperAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'formLogin'])->name('formLogin');
+    Route::POST('/login', [AuthController::class, 'login'])->name('login');
 
+});
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/electricite', function () {
-        return redirect('/generalCounter');
+        return redirect('/general');
     });
-    Route::get('/electricite/generalCounter', [TableController::class ,'getGenerale'])->name('generalCounter');
-    Route::get('/electricite/divisionCounter', [TableController::class ,'getDivisional'])->name('divisionCounter');
+    Route::get('/electricite/general', [TableController::class ,'getGenerale'])->name('general');
+    Route::get('/electricite/division', [TableController::class ,'getDivisional'])->name('division');
     Route::post('/electricite/store', [TableController::class ,'store'])->name('store');
     Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name('update');
     Route::delete('/electricite/delete/{id}', [TableController::class ,'delete'])->name('delete');
@@ -29,8 +33,4 @@ Route::middleware(['auth', CheckSuperAdmin::class])->group(function () {
     Route::delete('/centres/{centre}', [CentreController::class, 'destroy']);
 });
 
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'formLogin'])->name('formLogin');
-    Route::POST('/login', [AuthController::class, 'login'])->name('login');
-});
 

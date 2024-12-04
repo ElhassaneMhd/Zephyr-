@@ -31,14 +31,14 @@ class TableController extends Controller
         $user = auth()->user();
         $general = $user->centre->tables->where('counter', 'general');
         $tables = $this->refactorManyElements($general, 'tables');
-        return Inertia::render('Electricite/generalCounter',compact('tables'));
+        return Inertia::render('Electricite/GeneralCounter',compact('tables'));
     }
     public function getDivisional()
     {
         $user = auth()->user();
         $divisional = $user->centre->tables->where('counter', 'divisional');
         $tables = $this->refactorManyElements($divisional, 'tables');
-        return Inertia::render('Electricite/divisionalCounter',compact('tables'));
+        return Inertia::render('Electricite/DivisionalCounter',compact('tables'));
     }
     public function store(Request $request)
     {
@@ -52,7 +52,7 @@ class TableController extends Controller
             'counter' => 'required,in:general,divisional',
         ]);
         Table::create($request->all());
-            return to_route(route: 'tables');
+        return redirect()->back();
     }
 
 
@@ -69,7 +69,7 @@ class TableController extends Controller
             'counter' => 'required,in:general,divisional',
         ]);
         $table->update($request->all());
-        return to_route(route: 'tables');
+        return redirect()->back();
 
     }
 

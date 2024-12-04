@@ -19,7 +19,7 @@ class AuthController extends Controller{
             'password' => 'required|string|min:6'
         ]);
         //check if the password is correct
-        $user= User::withoutTrashed()->where('email', $data['email'])->first();
+        $user= User::where('email', $data['email'])->first();
         if(!$user){
             return to_route('formLogin')->withErrors(['email'=>'The provided email is incorrect.'])
                 ->withInput($request->only('email'));
@@ -33,7 +33,7 @@ class AuthController extends Controller{
         if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
         }
-        return to_route('dashboard');
+        return to_route('general');
     }
 // logout
     public function logout(Request $request) {
