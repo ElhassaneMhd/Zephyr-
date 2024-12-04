@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('puissance')->nullable();
             $table->integer('cos')->nullable();
             $table->foreignId('centre_id')->constrained()->cascadeOnDelete();
-            $table->enum('compteur' ,['general' ,'divisionnel'])->nullable();
+            $table->enum('counter' ,['general' ,'divisional'])->nullable();
             $table->timestamps();
         });
     }
