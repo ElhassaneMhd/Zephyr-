@@ -1,20 +1,37 @@
-import { FaPlus } from 'react-icons/fa6';
-import { Button } from '@/components/ui';
-import { useTable } from './useTable';
-import { useNavigate } from '@/hooks/useNavigate';
+import { FaPlus } from "react-icons/fa6";
+import { Button } from "@/components/ui";
+import { useTable } from "./useTable";
 
-export function NewRecord({ component,empty }) {
-  const { resourceName, disabled, routeName } = useTable();
-  const { navigate } = useNavigate();
+export function NewRecord({ onAdd, component }) {
+    const { showForm,  formOptions, formFields } = useTable();
 
-  const onAdd = () => navigate({ url: `${routeName}.create` });
-
-  if (component) return component(onAdd);
-
-  return (
-    <Button display='with-icon' color={'secondary'} className='text-nowrap' onClick={onAdd} disabled={!empty && disabled}>
-      <FaPlus />
-      {`New ${resourceName}`}
-    </Button>
-  );
+    if (component)
+        return component(() =>
+            showForm({
+                isOpen: true,
+                onSubmit: onAdd,
+                fields: formFields,
+                defaultValues: formOptions.defaultValues,
+                submitButtonText: 'Create',
+                type: "create",
+            }),
+        );
+    return (
+        <Button
+            display="with-icon"
+            className="text-nowrap"
+            onClick={() => {
+                showForm({
+                    isOpen: true,
+                    onSubmit: onAdd,
+                    defaultValues: formOptions.defaultValues,
+                    submitButtonText: 'Create',
+                });
+            }}
+            // disabled={disabled}
+        >
+            <FaPlus />
+            Create New
+        </Button>
+    );
 }

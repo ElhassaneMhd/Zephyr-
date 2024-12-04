@@ -61,8 +61,8 @@ export default function Sidebar() {
                 >
                     <img
                         className="h-9  object-cover text-center text-xs text-text-tertiary"
-                        src="/img/logozd.webp"
-                        alt="profile image"
+                        src="/images/logo.webp"
+                        alt="Zephyr Logo"
                     />
                 </div>
                 <Button

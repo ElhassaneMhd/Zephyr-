@@ -3,10 +3,13 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const defaultOptions = {
     displayNewRecord: true,
+    displayTableRecord: true,
     actions: null,
 };
 
 export function TableLayout({
+    onAdd,
+    onUpdate,
     canView,
     hideAllRowsActions,
     hideRowActions,
@@ -15,10 +18,17 @@ export function TableLayout({
     ...tableProps
 }) {
     const [parent] = useAutoAnimate({ duration: 300 });
-    const { displayNewRecord, actions } = {
+    const { displayTableRecord, displayNewRecord, actions } = {
         ...defaultOptions,
         ...(layoutOptions && layoutOptions),
     };
+
+    const newRecord =
+        typeof displayNewRecord === "boolean" && displayNewRecord ? (
+            <Table.NewRecord onAdd={onAdd} />
+        ) : (
+            displayNewRecord
+        );
 
     return (
         <div className="flex h-full flex-col gap-5 overflow-auto">
@@ -30,14 +40,7 @@ export function TableLayout({
                     </div>
                     <div className="flex items-center justify-between gap-3">
                         <Table.Download />
-                        {typeof displayNewRecord === "boolean" &&
-                        displayNewRecord ? (
-                            <Table.NewRecord
-                                empty={tableProps.data?.length === 0}
-                            />
-                        ) : (
-                            displayNewRecord
-                        )}
+                        {newRecord}
                     </div>
                 </div>
                 <div
@@ -45,15 +48,20 @@ export function TableLayout({
                     ref={parent}
                 >
                     <Table.Table
-                        canView={tableProps.isTrashed ? false : canView}
+                        canView={canView}
                         hideRowActions={hideRowActions}
                         hiddenActionsContent={hiddenActionsContent}
                         actions={
                             hideAllRowsActions ? null : (
-                                <Table.Actions actions={actions} />
+                                <Table.Actions
+                                    onUpdate={onUpdate}
+                                    actions={actions}
+                                />
                             )
                         }
+                        newRecord={newRecord}
                     />
+                    {displayTableRecord && <Table.TableRecord />}
                     <Table.Pagination />
                 </div>
                 <Table.Selected />
