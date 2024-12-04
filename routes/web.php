@@ -7,6 +7,7 @@ Route::get('/', function () {
 });
 
 Route::inertia('/electricite/general', 'Electricite/GeneralCounter');
+Route::inertia('/electricite/divisionnel', 'Electricite/DivisionalCounter');
 
 
 
