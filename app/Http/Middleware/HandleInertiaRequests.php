@@ -40,16 +40,14 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
        if( auth()->check()){
-
            if( $request->user()->isSuperAdmin == "true") {
                $centres = Centre::all();
-                $centre = [];
+                $allCentres = [];
                 foreach ($centres as $c){
-                    $centre[] = ["id"=>$c->id, "name"=>$c->name];
+                    $allCentres[] = ["id"=>$c->id, "name"=>$c->name];
                 }
-            }else{
-                $centre=$request->user()->centre->name;
             }
+            $mainCentre = ["id"=>$request->user()->centre->id, "name"=>$request->user()->centre->name];
         }
         return array_merge(parent::share($request), [
             'auth' => auth()->check() ? ([
@@ -57,7 +55,8 @@ class HandleInertiaRequests extends Middleware
                 "name" => $request->user()->name,
                 "email" => $request->user()->email,
                 "isSuperAdmin" => $request->user()->isSuperAdmin,
-                "centres" => $centre,
+                "mainCentre" => $mainCentre,
+                "centres" => $allCentres??[],
             ]) : null,
             ]
         );

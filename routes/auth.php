@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', CheckSuperAdmin::class])->group(function () {
     Route::get('/centres', [CentreController::class, 'index']);
 
-    Route::get('/centres/{id}/access', [CentreController::class, 'getAccess']);
+    Route::post('/centres/{id}/access', [CentreController::class, 'getAccess']);
 
     Route::post('/centres', [CentreController::class, 'store']);
     Route::put('/centres/{centre}', [CentreController::class, 'update']);

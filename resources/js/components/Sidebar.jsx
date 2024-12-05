@@ -20,7 +20,7 @@ const routes = [
         label: "Électricité",
         sub: [
             { label: "Compteur General", href: "/electricite/general" },
-            { label: "Compteur Divisionnel", href: "/electricite/divisionnel" },
+            { label: "Compteur Divisionnel", href: "/electricite/divisional" },
         ],
     },
     { icon: <IoHomeOutline />, label: "Eau", href: "/eau" },
