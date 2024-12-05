@@ -36,7 +36,7 @@ export function Actions({ row, actions, onUpdate }) {
                 showForm({
                     fields: formOptions.fields.map((field) => field),
                     defaultValues: { ...formOptions.defaultValues, ...row },
-                    onSubmit: (data) => onUpdate({ data }),
+                    onSubmit: (data) => onUpdate(data),
                     isOpen: true,
                     submitButtonText: "Save Changes",
                     type: "update",
@@ -51,8 +51,7 @@ export function Actions({ row, actions, onUpdate }) {
                     ...confirmOptions,
                     onConfirm: () => {
                         navigate({
-                            url: `${routeName}.destroy`,
-                            params: row.id,
+                            url: `${routeName}/destroy/${row.id}`,
                             method: "delete",
                         });
                         rows?.length === 1 && onPaginate(page - 1);

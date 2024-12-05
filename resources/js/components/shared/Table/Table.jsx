@@ -156,7 +156,7 @@ function Row({
         if (canView && !disabled && !isSelecting)
             typeof canView === "function"
                 ? canView(row)
-                : navigate({ url: `${routeName}.show`, params: row.id });
+                : navigate({ url: `${routeName}/show/${row.id}` });
     };
     //
     return (

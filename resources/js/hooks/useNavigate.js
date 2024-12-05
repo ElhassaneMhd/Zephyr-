@@ -2,7 +2,6 @@ import { useCallback, useState } from "react";
 import { router } from "@inertiajs/react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
-import { Ziggy } from "@/ziggy";
 
 export const useNavigate = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +12,7 @@ export const useNavigate = () => {
         ({ url, method = "get", params = {}, data = {}, options = {} }) => {
             // eslint-disable-next-line no-undef
             const endpoint = url.includes(".")
-                ? route(url, params, undefined, Ziggy)
+                ? route(url, params, undefined)
                 : url;
 
             const routeOptions = {

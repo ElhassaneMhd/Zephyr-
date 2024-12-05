@@ -79,6 +79,6 @@ class TableController extends Controller
     }
     public function notFound()
     {
-        return Inertia::render('NotFound');
+        return Inertia::render('UnderConstruction');
     }
 }
