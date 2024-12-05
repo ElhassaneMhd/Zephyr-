@@ -10,12 +10,10 @@ use Inertia\Inertia;
 class UserController extends Controller
 {
     public function index(){
-        $users = User::all();
+        $user = auth()->user();
+        $users = User::whereNot("id" , $user->id)->get();
         $users = $this->refactorManyElements($users,'users');
         return Inertia::render('Settings/Users',compact('users'));
-    }
-    public function create(){
-        return Inertia::render('Settings/CreateUser');
     }
     public function store(Request $request) {
         $data = $request->validate([

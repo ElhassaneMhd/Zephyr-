@@ -19,30 +19,28 @@ Route::middleware('auth')->group(function () {
         return redirect('/electricite/general');
     });
     Route::get('/electricite/general', [TableController::class ,'getGenerale'])->name('general');
-    Route::get('/electricite/divisional', [TableController::class ,'getDivisional'])->name('division');
+    Route::get('/electricite/divisional', [TableController::class ,'getDivisional'])->name('divisional');
     Route::post('/electricite/store', [TableController::class ,'store'])->name('row.store');
     Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name(' row.update');
-    Route::delete('/electricite/delete/{id}', [TableController::class ,'delete'])->name('row.delete');
+    Route::delete('/electricite/delete/{id}', [TableController::class ,'delete'])->name('row.destroy');
 
     Route::get('/row/{id}/historic', [HistoricController::class ,'index'])->name('historic');
-    Route::delete('/row/{id}/historic/delete', [HistoricController::class ,'destroy'])->name('deleteHistoric');
+    Route::delete('/row/{id}/historic/delete', [HistoricController::class ,'destroy'])->name('historic.destroy');
 });
 Route::middleware(['auth', CheckSuperAdmin::class])->group(function () {
-    Route::get('/centres', [CentreController::class, 'index']);
     Route::get('/settings/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/settings/users/create', [UserController::class, 'create']);
     Route::post('/settings/users', [UserController::class, 'store'])->name('users.store');
+    Route::put('/settings/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/settings/users/{id}/delete', [UserController::class, 'destroy'])->name('users.destroy');
 
 
-    Route::post('/centres/{id}/access', [CentreController::class, 'getAccess']);
 
-    Route::post('/centres', [CentreController::class, 'store']);
-    Route::put('/centres/{centre}', [CentreController::class, 'update']);
-    Route::delete('/centres/{centre}', [CentreController::class, 'destroy']);
+    Route::get('/centres', [CentreController::class, 'index'])->name('centres.index');
+    Route::post('/centres', [CentreController::class, 'store'])->name('centres.store');
+    Route::put('/centres/{centre}', [CentreController::class, 'update'])->name('centres.update');
+    Route::delete('/centres/{centre}', [CentreController::class, 'destroy'])->name('centres.destroy');
+    Route::post('/centres/{id}/access', [CentreController::class, 'getAccess'])->name('centres.access');
 
-    Route::post('/users', [UserController::class, 'store']);
-    Route::put('/users/{id}', [UserController::class, 'update']);
-    Route::delete('/users/{id}', [UserController::class, 'delete']);
 });
 
 
