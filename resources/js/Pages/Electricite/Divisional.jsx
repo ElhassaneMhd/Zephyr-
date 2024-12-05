@@ -1,4 +1,9 @@
+import { Head } from "@inertiajs/react";
 
 export default function Divisional() {
-    return <div>Divisional</div>;
+    return (
+        <>
+            <Head title="Electricite | Compteur Divisionnel" />
+        </>
+    );
 }

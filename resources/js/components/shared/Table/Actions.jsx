@@ -38,16 +38,9 @@ export function Actions({ row, actions, onUpdate }) {
                 showForm({
                     fields: formOptions.fields.map((field) => field),
                     defaultValues: { ...formOptions.defaultValues, ...row },
-                    onSubmit: (data) => onUpdate({ id: row.profile_id, data }),
+                    onSubmit: (data) => onUpdate({ data }),
                     isOpen: true,
                     submitButtonText: "Save Changes",
-                    // heading: (
-                    //     <>
-                    //         Update {resourceName}{" "}
-                    //         <span className="text-primary">#</span>
-                    //         {row.id}
-                    //     </>
-                    // ),
                     type: "update",
                 });
             },

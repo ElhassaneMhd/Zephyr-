@@ -23,7 +23,7 @@ export function NewRecord({ onAdd, component }) {
             onClick={() => {
                 showForm({
                     isOpen: true,
-                    onSubmit: onAdd,
+                    onSubmit: (data) => onAdd(data),
                     defaultValues: formOptions.defaultValues,
                     submitButtonText: 'Create',
                 });

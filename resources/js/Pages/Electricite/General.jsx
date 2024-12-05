@@ -1,19 +1,23 @@
 import Tabs from "@/components/ui/Tabs";
-import { useNavigate } from "@/hooks";
+import { useNavigate, useUser } from "@/hooks";
 import { TableLayout } from "@/layouts/TableLayout";
 import { formatDate } from "@/utils/helpers";
+import { Head } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function General({ tables }) {
-    console.log(tables);
     const [current, setCurrent] = useState(
         tables ? Object.keys(tables)[0] : null,
     );
-    const navigate = useNavigate();
+    const { user } = useUser();
+    const {navigate} = useNavigate();
     const resourceName = "electricite-general";
+
+    console.log(tables,user);
 
     return (
         <>
+            <Head title="Electricite | Compteur General" />
             <div className="flex items-center justify-between gap-6">
                 <h1 className="text-2xl text-text-primary font-bold">
                     Compteur General
@@ -154,10 +158,27 @@ export default function General({ tables }) {
                 // }}
                 layoutOptions={{
                     actions: (def) => [def.edit, def.delete],
-                    // displayNewRecord: false,
                 }}
-                onAdd={console.log}
-                onUpdate={console.log}
+                onAdd={(row) => {
+                    navigate({
+                        url: "store",
+                        method: "put",
+                        data: {
+                            ...row,
+                            table_name: current,
+                            centre_id: 23 , //user.mainCentre.id,
+                            counter: "general",
+                        },
+                    });
+                }}
+                onUpdate={(row) => {
+                    navigate({
+                        url: "update",
+                        params: row.id,
+                        method: "put",
+                        data: row,
+                    });
+                }}
             />
         </>
     );

@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { router } from '@inertiajs/react';
 import { toast } from 'sonner';
+import { route } from 'ziggy-js';
 
 export const useNavigate = () => {
   const [isLoading, setIsLoading] = useState(false);
