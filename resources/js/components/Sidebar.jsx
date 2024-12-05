@@ -12,7 +12,7 @@ import {
 import { Button } from "./ui";
 import { ThemeToggler } from "./ThemeToggler";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useConfirmationModal, useNavigate } from "@/hooks";
+import { useConfirmationModal, useNavigate, useUser } from "@/hooks";
 
 const routes = [
     {
@@ -20,7 +20,7 @@ const routes = [
         label: "Électricité",
         sub: [
             { label: "Compteur General", href: "/electricite/general" },
-            { label: "Compteur Divisionnel", href: "/electricite/divisionnel" },
+            { label: "Compteur Divisionnel", href: "/electricite/divisional" },
         ],
     },
     { icon: <IoHomeOutline />, label: "Eau", href: "/eau" },
@@ -35,7 +35,7 @@ export default function Sidebar() {
     );
     const { navigate } = useNavigate();
     const { openModal } = useConfirmationModal();
-
+    const { user } = useUser();
     useEffect(() => {
         const onresize = () =>
             setIsExpanded(window.matchMedia("(min-width: 1024px)").matches);
@@ -94,9 +94,16 @@ export default function Sidebar() {
                     className={`flex items-center gap-2 ${isExpanded ? "" : "flex-col"}`}
                 >
                     <ThemeToggler layout={isExpanded ? "long" : ""} />
-                    <Button shape="icon">
-                        <IoSettingsOutline className="text-text-tertiary" />
-                    </Button>
+                    {user.isSuperAdmin === "true" && (
+                        <Button
+                            shape="icon"
+                            onClick={() => {
+                                navigate({ url: "/settings" });
+                            }}
+                        >
+                            <IoSettingsOutline className="text-text-tertiary" />
+                        </Button>
+                    )}
                     <Button
                         shape="icon"
                         onClick={() => {

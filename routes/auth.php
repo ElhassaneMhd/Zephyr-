@@ -16,21 +16,25 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/electricite', function () {
-        return redirect('/general');
+        return redirect('/electricite/general');
     });
     Route::get('/electricite/general', [TableController::class ,'getGenerale'])->name('general');
     Route::get('/electricite/divisional', [TableController::class ,'getDivisional'])->name('division');
-    Route::post('/electricite/store', [TableController::class ,'store'])->name('store');
-    Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name('update');
-    Route::delete('/electricite/delete/{id}', [TableController::class ,'delete'])->name('delete');
+    Route::post('/electricite/store', [TableController::class ,'store'])->name('row.store');
+    Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name(' row.update');
+    Route::delete('/electricite/delete/{id}', [TableController::class ,'delete'])->name('row.delete');
 
     Route::get('/row/{id}/historic', [HistoricController::class ,'index'])->name('historic');
     Route::delete('/row/{id}/historic/delete', [HistoricController::class ,'destroy'])->name('deleteHistoric');
 });
 Route::middleware(['auth', CheckSuperAdmin::class])->group(function () {
     Route::get('/centres', [CentreController::class, 'index']);
+    Route::get('/settings/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/settings/users/create', [UserController::class, 'create']);
+    Route::post('/settings/users', [UserController::class, 'store'])->name('users.store');
 
-    Route::get('/centres/{id}/access', [CentreController::class, 'getAccess']);
+
+    Route::post('/centres/{id}/access', [CentreController::class, 'getAccess']);
 
     Route::post('/centres', [CentreController::class, 'store']);
     Route::put('/centres/{centre}', [CentreController::class, 'update']);

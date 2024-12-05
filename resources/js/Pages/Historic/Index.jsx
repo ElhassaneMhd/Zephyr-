@@ -17,24 +17,6 @@ export default function Historics({ historic, table }) {
                             index={e.index}
                             date={e.date}
                         />
-                        <Historic
-                            c={c + 1}
-                            id={e.id}
-                            index={e.index}
-                            date={e.date}
-                        />
-                        <Historic
-                            c={c + 2}
-                            id={e.id}
-                            index={e.index}
-                            date={e.date}
-                        />
-                        <Historic
-                            c={c + 3}
-                            id={e.id}
-                            index={e.index}
-                            date={e.date}
-                        />
                     </>
                 ))}
             </div>

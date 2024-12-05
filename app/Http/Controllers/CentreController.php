@@ -28,7 +28,7 @@ class CentreController extends Controller
         $user = auth()->user();
         $user->centre_id = $id;
         $user->save();
-        return response()->json(["message"=>"Access granted"]);
+        return back();
     }
 
     public function update(Request $request,$id)

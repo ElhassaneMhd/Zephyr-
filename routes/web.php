@@ -12,7 +12,6 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/api.php';
 
 
-Route::get('/historic/{id}',  [HistoricController::class, 'index']);
 
 Route::fallback(function () {
     return inertia('NotFound');
