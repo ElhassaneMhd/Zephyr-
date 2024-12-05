@@ -58,8 +58,6 @@ class TableController extends Controller
         Table::create($request->all());
         return redirect()->back();
     }
-
-
     public function update(Request $request, $id)
     {
         $table = Table::findOrFail($id);
@@ -73,10 +71,14 @@ class TableController extends Controller
         $table->update($request->all());
         return redirect()->back();
     }
-
     public function destroy($id)
     {
+        dd($id);
         $table = Table::findOrFail($id);
         $table->delete();
+    }
+    public function notFound()
+    {
+        return Inertia::render('NotFound');
     }
 }

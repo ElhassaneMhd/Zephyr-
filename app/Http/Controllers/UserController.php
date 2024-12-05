@@ -24,20 +24,20 @@ class UserController extends Controller
             "isSuperAdmin"=>'in:true,false|default:false'
         ]);
         $data['password'] = Hash::make($data['password']);
-        $user = User::create($data);
+        User::create($data);
         return to_route('users.index');
     }
     public function update(Request $request,$id) {
         $user = User::find($id);
         $data = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            "centre_id"=>'required|exists:centres,id',
-            "isSuperAdmin"=>'required|in:true,false|default:false'
+            'name' => 'string',
+            'email' => 'email|unique:users,email',
+            'password' => 'string|min:6|confirmed',
+            "centre_id"=>'exists:centres,id',
+            "isSuperAdmin"=>'in:true,false|default:false'
         ]);
         $data['password'] = Hash::make($data['password']);
-        $user = User::update($data);
+        $user->update($data);
         return response()->json(['message'=>'User updated successfully']);
     }
     public function delete($id) {
