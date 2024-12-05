@@ -21,12 +21,12 @@ export function TableRecord() {
 
     const {
         Form,
-        options: { isUpdated,  handleSubmit, reset, updateValues },
+        options: { isUpdated, handleSubmit, reset, updateValues },
     } = useForm({
         defaultValues,
         fields,
         gridLayout,
-        onSubmit: (data) => onSubmit( data),
+        onSubmit: (data) => onSubmit(data),
     });
 
     useEffect(() => {
@@ -41,13 +41,13 @@ export function TableRecord() {
             closeOnBlur={true}
             onClose={() => reset(close)}
         >
-            <div className="flex items-center">
-                {heading && (
+            {heading && (
+                <div className="flex items-center">
                     <h1 className="mb-6 text-2xl font-bold text-text-primary">
                         {heading}
                     </h1>
-                )}
-            </div>
+                </div>
+            )}
             <ModalFormLayout
                 submitButton={{
                     text: submitButtonText,

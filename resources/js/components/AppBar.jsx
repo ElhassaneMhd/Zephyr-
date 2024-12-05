@@ -1,13 +1,13 @@
 import { useUser } from "@/hooks/useUser";
 import { DropDown } from "./ui";
 import { useNavigate } from "@/hooks";
+import { FaCity } from "react-icons/fa6";
 
 export default function AppBar() {
     const { navigate } = useNavigate();
-
     const { user } = useUser();
-    const { name = "John", isSuperAdmin, centres, mainCentre } = user || {};
-    console.log(centres);
+    const { name, isSuperAdmin, centres, mainCentre } = user || {};
+
     return (
         <div className="flex items-center  justify-between gap-8 px-6 py-3">
             <div className="flex items-center gap-3">
@@ -25,18 +25,16 @@ export default function AppBar() {
                 {Array.isArray(centres) && centres.length > 0 ? (
                     <DropDown
                         toggler={
-                            <DropDown.Option
-                                size="large"
-                                className="bg-background-secondary text-text-primary"
-                            >
+                            <DropDown.Toggler>
+                                <FaCity />
                                 {mainCentre.name}
-                            </DropDown.Option>
+                            </DropDown.Toggler>
                         }
+                        togglerClassName="w-fit gap-2"
                     >
                         {centres.map((el) => (
                             <DropDown.Option
                                 key={el.id}
-                                size="large"
                                 className="justify-center"
                                 isCurrent={mainCentre.id === el.id}
                                 onClick={() =>

@@ -153,7 +153,20 @@ export function useForm({
                 inputs[name] = customComponent ? (
                     <Custom
                         Component={customComponent}
-                        {...{ field, setValue, getValue }}
+                        {...{
+                            field,
+                            onChange: (value) => {
+                                validate(
+                                    name,
+                                    value,
+                                    getRules(name, label, type, rules),
+                                );
+                                setValue(name, value);
+                            },
+                            setValue,
+                            getValue,
+                            errorMessage: errors?.[name]?.message,
+                        }}
                     />
                 ) : (
                     <Input
@@ -309,7 +322,11 @@ export function useForm({
 }
 
 const Input = ({ type, name, ...props }) => {
-    const filteredProps = filterObject(props, ["format", "rules"], "exclude");
+    const filteredProps = filterObject(
+        props,
+        ["format", "rules", "calculate"],
+        "exclude",
+    );
 
     return type === "password" ? (
         <PasswordInput {...filteredProps} />

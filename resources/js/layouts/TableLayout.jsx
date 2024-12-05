@@ -3,6 +3,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const defaultOptions = {
     displayNewRecord: true,
+    newRecordLabel: null,
     displayTableRecord: true,
     actions: null,
 };
@@ -18,14 +19,14 @@ export function TableLayout({
     ...tableProps
 }) {
     const [parent] = useAutoAnimate({ duration: 300 });
-    const { displayTableRecord, displayNewRecord, actions } = {
+    const { displayTableRecord, displayNewRecord, newRecordLabel, actions } = {
         ...defaultOptions,
         ...(layoutOptions && layoutOptions),
     };
 
     const newRecord =
         typeof displayNewRecord === "boolean" && displayNewRecord ? (
-            <Table.NewRecord onAdd={onAdd} />
+            <Table.NewRecord onAdd={onAdd} label={newRecordLabel} />
         ) : (
             displayNewRecord
         );

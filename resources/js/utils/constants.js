@@ -18,9 +18,9 @@ export const RULES = {
     },
     password: {
         pattern: {
-            value: /^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,}$/,
+            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
             message:
-                "Password must contain at least 8 characters, one letter (either uppercase or lowercase), and one number",
+                "Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)",
         },
     },
     passwordConfirmation: {

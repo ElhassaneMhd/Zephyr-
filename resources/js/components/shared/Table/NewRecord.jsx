@@ -2,8 +2,8 @@ import { FaPlus } from "react-icons/fa6";
 import { Button } from "@/components/ui";
 import { useTable } from "./useTable";
 
-export function NewRecord({ onAdd, component }) {
-    const { showForm,  formOptions, formFields } = useTable();
+export function NewRecord({ onAdd, component, label }) {
+    const { showForm, resourceName, formOptions, formFields } = useTable();
 
     if (component)
         return component(() =>
@@ -12,7 +12,7 @@ export function NewRecord({ onAdd, component }) {
                 onSubmit: onAdd,
                 fields: formFields,
                 defaultValues: formOptions.defaultValues,
-                submitButtonText: 'Create',
+                submitButtonText: "Create",
                 type: "create",
             }),
         );
@@ -25,13 +25,12 @@ export function NewRecord({ onAdd, component }) {
                     isOpen: true,
                     onSubmit: (data) => onAdd(data),
                     defaultValues: formOptions.defaultValues,
-                    submitButtonText: 'Create',
+                    submitButtonText: "Create",
                 });
             }}
-            // disabled={disabled}
         >
             <FaPlus />
-            Create New
+            {label || `New ${resourceName}`}
         </Button>
     );
 }

@@ -13,6 +13,7 @@ import { Button } from "./ui";
 import { ThemeToggler } from "./ThemeToggler";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useConfirmationModal, useNavigate, useUser } from "@/hooks";
+import { Logo } from "./ui/Logo";
 
 const routes = [
     {
@@ -59,11 +60,7 @@ export default function Sidebar() {
                         isExpanded ? "w-20 flex-1 scale-100" : "h-0 w-0 scale-0"
                     }
                 >
-                    <img
-                        className="h-9  object-cover text-center text-xs text-text-tertiary"
-                        src="/images/logo.webp"
-                        alt="Zephyr Logo"
-                    />
+                   <Logo />
                 </div>
                 <Button
                     shape="icon"

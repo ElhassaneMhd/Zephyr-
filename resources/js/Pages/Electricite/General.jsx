@@ -1,3 +1,4 @@
+import { Heading } from "@/components/Heading";
 import Tabs from "@/components/ui/Tabs";
 import { useNavigate, useUser } from "@/hooks";
 import { TableLayout } from "@/layouts/TableLayout";
@@ -10,18 +11,16 @@ export default function General({ tables }) {
         tables ? Object.keys(tables)[0] : null,
     );
     const { user } = useUser();
-    const {navigate} = useNavigate();
+    const { navigate } = useNavigate();
     const resourceName = "electricite-general";
 
-    console.log(tables,user);
+    console.log(tables, user);
 
     return (
         <>
             <Head title="Electricite | Compteur General" />
             <div className="flex items-center justify-between gap-6">
-                <h1 className="text-2xl text-text-primary font-bold">
-                    Compteur General
-                </h1>
+                <Heading>Compteur General</Heading>
                 <Tabs
                     tabs={Object.keys(tables)}
                     onChange={(v) => setCurrent(v)}
@@ -152,28 +151,25 @@ export default function General({ tables }) {
                             }),
                     },
                 }}
-                // filters={{
-                //   ...filterObject(options.filters, ['created_at'], 'include'),
-                //   ...getFilter('role', roles, 'name'),
-                // }}
                 layoutOptions={{
                     actions: (def) => [def.edit, def.delete],
+                    newRecordLabel: "Create New",
                 }}
                 onAdd={(row) => {
                     navigate({
-                        url: "store",
-                        method: "put",
+                        url: "row.store",
+                        method: "post",
                         data: {
                             ...row,
                             table_name: current,
-                            centre_id: 23 , //user.mainCentre.id,
+                            centre_id: 23, //user.mainCentre.id,
                             counter: "general",
                         },
                     });
                 }}
                 onUpdate={(row) => {
                     navigate({
-                        url: "update",
+                        url: "row.update",
                         params: row.id,
                         method: "put",
                         data: row,

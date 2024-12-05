@@ -34,9 +34,10 @@ function Login() {
         <>
             <Head title="Login" />
             <div className="grid h-screen w-full gap-3 bg-background-primary md:grid-cols-2">
-                <div className="relative hidden place-content-center bg-background-secondary md:grid"></div>
+                <div className="relative hidden place-content-center bg-background-secondary md:grid">
+                    <Logo className="w-72 h-full"/>
+                </div>
                 <div className="w- flex flex-col p-3">
-                    <Logo className="w-20" />
                     <div className="flex w-full flex-1 flex-col justify-center gap-3 px-4">
                         <h1 className="mb-5 text-4xl font-bold text-text-primary">
                             Welcome Back

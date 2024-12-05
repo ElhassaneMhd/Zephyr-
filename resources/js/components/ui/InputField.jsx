@@ -31,7 +31,7 @@ const icons = {
   'datetime-local': <IoCalendarNumberOutline />,
 };
 
-function Label({ label, message }) {
+export function Label({ label, message }) {
   if (!label) return null;
 
   return (

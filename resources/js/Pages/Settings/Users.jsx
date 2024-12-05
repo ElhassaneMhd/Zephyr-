@@ -1,26 +1,23 @@
-import Tabs from "@/components/ui/Tabs";
-import { useNavigate } from "@/hooks";
+import { Heading } from "@/components/Heading";
+import { CheckBox, DropDown } from "@/components/ui";
+import { Label } from "@/components/ui/InputField";
+import { useNavigate, useUser } from "@/hooks";
 import { TableLayout } from "@/layouts/TableLayout";
-import { useState } from "react";
+import { RULES } from "@/utils/constants";
 
 export default function Users({ users }) {
-    const [current, setCurrent] = useState("Users");
-    const resourceName = "users";
-    const navigate = useNavigate();
+    const resourceName = "User";
+    const {navigate} = useNavigate();
 
     return (
         <>
             <div className="flex items-center justify-between gap-6">
-                <h1 className="text-2xl text-text-primary font-bold">
-                    Users{" "}
-                </h1>
-                <Tabs tabs={["Users"]} onChange={(v) => setCurrent(v)} />
+                <Heading>Users</Heading>
             </div>
             <TableLayout
-                key={current}
-                routeName="general"
+                routeName="users"
                 resourceName={resourceName}
-                data={users?.[current] || []}
+                data={users || []}
                 columns={[
                     {
                         key: "name",
@@ -34,6 +31,10 @@ export default function Users({ users }) {
                     },
                 ]}
                 formFields={[
+                    {
+                        name: "centre",
+                        customComponent: <Centers />,
+                    },
                     {
                         name: "name",
                         label: "Name",
@@ -52,8 +53,21 @@ export default function Users({ users }) {
                         name: "password_confirmation",
                         type: "password",
                         label: "Confirm Password",
+                        rules: { ...RULES.passwordConfirmation },
+                    },
+                    {
+                        name: "isSuperAdmin",
+                        customComponent: <MakeSuperAdmin />,
                     },
                 ]}
+                formDefaults={{
+                    centre: "",
+                    name: "",
+                    email: "",
+                    password: "",
+                    password_confirmation: "",
+                    isSuperAdmin: "false",
+                }}
                 fieldsToSearch={["name"]}
                 selectedOptions={{
                     deleteOptions: {
@@ -74,9 +88,73 @@ export default function Users({ users }) {
                     actions: (def) => [def.edit, def.delete],
                     // displayNewRecord: false,
                 }}
-                onAdd={console.log}
-                onUpdate={console.log}
-            />{" "}
+                onAdd={(data) => {
+                    navigate({
+                        url: "users.store",
+                        method: "post",
+                        data: { ...data, centre_id: data.centre.id },
+                    });
+                }}
+                onUpdate={(data) => {
+                    navigate({
+                        url: "data.update",
+                        params: data.id,
+                        method: "put",
+                        data: { ...data, centre_id: data.centre.id },
+                    });
+                }}
+            />
         </>
+    );
+}
+
+function Centers({ getValue, onChange, errorMessage }) {
+    const { user } = useUser();
+
+    return (
+        <div className="flex flex-col gap-1.5 col-span-2">
+            <Label label="Centre" message={errorMessage} />
+            <DropDown
+                toggler={
+                    <DropDown.Toggler>
+                        <span className="capitalize">
+                            {(getValue("centre") && getValue("centre").name) ||
+                                "Choose a center"}
+                        </span>
+                    </DropDown.Toggler>
+                }
+                options={{
+                    className: "overflow-auto max-h-[300px] w-[230px]",
+                    shouldCloseOnClick: false,
+                }}
+            >
+                {user?.centres.map((c) => (
+                    <DropDown.Option
+                        key={c.id}
+                        onClick={() => onChange({ id: c.id, name: c.name })}
+                        className="capitalize"
+                        isCurrent={
+                            c.id === getValue("centre") && getValue("centre").id
+                        }
+                    >
+                        {c.name}
+                    </DropDown.Option>
+                ))}
+            </DropDown>
+        </div>
+    );
+}
+
+function MakeSuperAdmin({ getValue, setValue, errorMessage }) {
+    return (
+        <div className="flex h-8 items-center gap-1.5 mt-2">
+            <CheckBox
+                checked={getValue("isSuperAdmin") === "true"}
+                onChange={(e) =>
+                    setValue("isSuperAdmin", String(e.target.checked))
+                }
+            />
+            <Label label="Make Super Admin" message={errorMessage} />
+        </div>
     );
 }
