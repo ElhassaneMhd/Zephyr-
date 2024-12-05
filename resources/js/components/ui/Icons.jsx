@@ -105,3 +105,7 @@ export {
 export { GrMapLocation, GrPowerReset, GrArticle, GrUserAdmin } from 'react-icons/gr';
 export { GoLink, GoUnlink, GoPeople } from 'react-icons/go';
 export { LiaUserPlusSolid, LiaUserMinusSolid, LiaUserEditSolid } from 'react-icons/lia';
+export { MdElectricBolt, MdOutlineEnergySavingsLeaf } from "react-icons/md";
+export { RiGasStationLine } from "react-icons/ri";
+export { IoWaterOutline } from "react-icons/io5";
+export { LiaFireSolid } from "react-icons/lia";

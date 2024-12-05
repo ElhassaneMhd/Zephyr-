@@ -12,19 +12,19 @@ export default function General({ tables }) {
     );
     const { user } = useUser();
     const { navigate } = useNavigate();
-    const resourceName = "electricite-general";
-
-    console.log(tables, user);
+    const resourceName = "Record";
 
     return (
         <>
             <Head title="Electricite | Compteur General" />
             <div className="flex items-center justify-between gap-6">
                 <Heading>Compteur General</Heading>
-                <Tabs
-                    tabs={Object.keys(tables)}
-                    onChange={(v) => setCurrent(v)}
-                />
+                {current && (
+                    <Tabs
+                        tabs={Object.keys(tables)}
+                        onChange={(v) => setCurrent(v)}
+                    />
+                )}
             </div>
             <TableLayout
                 key={current}
@@ -152,8 +152,7 @@ export default function General({ tables }) {
                     },
                 }}
                 layoutOptions={{
-                    actions: (def) => [def.edit, def.delete],
-                    newRecordLabel: "Create New",
+                    actions: (def) => [def.view,def.edit, def.delete],
                 }}
                 onAdd={(row) => {
                     navigate({

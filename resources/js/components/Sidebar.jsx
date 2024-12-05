@@ -5,8 +5,12 @@ import {
     BsLayoutSidebarInsetReverse,
     FiLogOut,
     IoChevronDownOutline,
-    IoHomeOutline,
     IoSettingsOutline,
+    IoWaterOutline,
+    LiaFireSolid,
+    MdElectricBolt,
+    MdOutlineEnergySavingsLeaf,
+    RiGasStationLine,
 } from "./ui/Icons";
 
 import { Button } from "./ui";
@@ -15,19 +19,20 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useConfirmationModal, useNavigate, useUser } from "@/hooks";
 import { Logo } from "./ui/Logo";
 
+
 const routes = [
     {
-        icon: <IoHomeOutline />,
+        icon: <MdElectricBolt  />,
         label: "Électricité",
         sub: [
             { label: "Compteur General", href: "/electricite/general" },
             { label: "Compteur Divisionnel", href: "/electricite/divisional" },
         ],
     },
-    { icon: <IoHomeOutline />, label: "Eau", href: "/eau" },
-    { icon: <IoHomeOutline />, label: "Carburan", href: "/carburan" },
-    { icon: <IoHomeOutline />, label: "Gaz", href: "/gaz" },
-    { icon: <IoHomeOutline />, label: "Biomasse", href: "/biomasse" },
+    { icon: <IoWaterOutline  />, label: "Eau", href: "/eau" },
+    { icon: <RiGasStationLine  />, label: "Carburan", href: "/carburan" },
+    { icon: <LiaFireSolid   />, label: "Gaz", href: "/gaz" },
+    { icon: <MdOutlineEnergySavingsLeaf  />, label: "Biomasse", href: "/biomasse" },
 ];
 
 export default function Sidebar() {

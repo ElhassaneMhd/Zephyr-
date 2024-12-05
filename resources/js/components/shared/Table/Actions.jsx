@@ -4,7 +4,6 @@ import {
     IoEyeOutline,
     IoTrashOutline,
     MdDriveFileRenameOutline,
-    MdOutlineSettingsBackupRestore,
 } from "@/components/ui/Icons";
 import { useTable } from "./useTable";
 import { useConfirmationModal } from "@/hooks/useConfirmationModal";
@@ -17,7 +16,6 @@ export function Actions({ row, actions, onUpdate }) {
         page,
         onPaginate,
         routeName,
-        resourceName,
         formOptions,
         showForm,
     } = useTable();

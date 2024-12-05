@@ -7,7 +7,7 @@ import { RULES } from "@/utils/constants";
 
 export default function Users({ users }) {
     const resourceName = "User";
-    const {navigate} = useNavigate();
+    const { navigate } = useNavigate();
 
     return (
         <>
@@ -27,6 +27,16 @@ export default function Users({ users }) {
                     {
                         key: "email",
                         displayLabel: "Email",
+                        visible: true,
+                    },
+                    {
+                        key: "centre",
+                        displayLabel: "Centre",
+                        visible: true,
+                    },
+                    {
+                        key: "Super Admin",
+                        displayLabel: "IsSuperAdmin",
                         visible: true,
                     },
                 ]}
