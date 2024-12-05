@@ -51,7 +51,7 @@ export function Actions({ row, actions, onUpdate }) {
                     ...confirmOptions,
                     onConfirm: () => {
                         navigate({
-                            url: `${routeName}."destroy"}`,
+                            url: `${routeName}.destroy`,
                             params: row.id,
                             method: "delete",
                         });

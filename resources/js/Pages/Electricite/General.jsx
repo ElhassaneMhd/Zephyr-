@@ -28,7 +28,7 @@ export default function General({ tables }) {
             </div>
             <TableLayout
                 key={current}
-                routeName="general"
+                routeName="row"
                 resourceName={resourceName}
                 data={tables?.[current] || []}
                 columns={[
@@ -161,7 +161,7 @@ export default function General({ tables }) {
                         data: {
                             ...row,
                             table_name: current,
-                            centre_id: 23, //user.mainCentre.id,
+                            centre_id:user.mainCentre.id,
                             counter: "general",
                         },
                     });

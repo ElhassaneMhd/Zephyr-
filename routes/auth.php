@@ -22,12 +22,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/electricite/divisional', [TableController::class ,'getDivisional'])->name('divisional');
     Route::post('/electricite/store', [TableController::class ,'store'])->name('row.store');
     Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name(' row.update');
-    Route::delete('/electricite/delete/{id}', [TableController::class ,'delete'])->name('row.destroy');
+    Route::delete('/electricite/delete/{id}', [TableController::class ,'destroy'])->name('row.destroy');
 
     Route::get('/row/{id}/historic', [HistoricController::class ,'index'])->name('historic');
     Route::delete('/row/{id}/historic/delete', [HistoricController::class ,'destroy'])->name('historic.destroy');
+
+    Route::get('/eau', [TableController::class ,'notFound'])->name('eau');
+    Route::get('/cardurant', [TableController::class ,'notFound'])->name('cardurant');
+    Route::get('/gaz', [TableController::class ,'notFound'])->name('gaz');
+    Route::get('/biomasse', [TableController::class ,'notFound'])->name('biomasse');
+
 });
 Route::middleware(['auth', CheckSuperAdmin::class])->group(function () {
+     Route::get('/settings', function () {
+        return redirect('/settings/users');
+    });
     Route::get('/settings/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/settings/users', [UserController::class, 'store'])->name('users.store');
     Route::put('/settings/users/{id}/update', [UserController::class, 'update'])->name('users.update');
