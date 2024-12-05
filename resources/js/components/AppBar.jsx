@@ -35,7 +35,7 @@ export default function AppBar() {
                     >
                         {centres.map((el) => (
                             <DropDown.Option
-                                key={el}
+                                key={el.id}
                                 size="large"
                                 className="justify-center"
                                 isCurrent={mainCentre.id === el.id}

@@ -53,6 +53,7 @@ class TableController extends Controller
             'consummation' => 'required,numeric',
             'centre_id' => $centre->id,
             'counter' => 'required,in:general,divisional',
+            'cos' => 'required,numeric',
         ]);
         Table::create($request->all());
         return redirect()->back();
@@ -63,15 +64,14 @@ class TableController extends Controller
     {
         $table = Table::findOrFail($id);
         $request->validate([
-            'name' => 'required',
             'date' => 'required,date',
             'index' => 'required,numeric',
             'puissance' => 'required,numeric',
             'consummation' => 'required,numeric',
+            "cost" => 'required,numeric',
         ]);
         $table->update($request->all());
         return redirect()->back();
-
     }
 
     public function destroy($id)

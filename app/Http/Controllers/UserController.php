@@ -12,20 +12,22 @@ class UserController extends Controller
     public function index(){
         $users = User::all();
         $users = $this->refactorManyElements($users,'users');
-        return Inertia::render('Users',compact('users'));
+        return Inertia::render('Settings/Users',compact('users'));
+    }
+    public function create(){
+        return Inertia::render('Settings/CreateUser');
     }
     public function store(Request $request) {
         $data = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-
             "centre_id"=>'required|exists:centres,id',
-            "isSuperAdmin"=>'required|in:true,false|default:false'
+            "isSuperAdmin"=>'in:true,false|default:false'
         ]);
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
-        return response()->json(["message"=>"User created successfully"]);
+        return to_route('users.index');
     }
     public function update(Request $request,$id) {
         $user = User::find($id);
