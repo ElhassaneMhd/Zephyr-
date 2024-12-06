@@ -63,20 +63,22 @@ export default function Counter({ tables, type }) {
                         visible: true,
                         type: "number",
                     },
-                    ...(type === "general" && [
-                        {
-                            key: "puissance",
-                            displayLabel: "Puissance",
-                            visible: true,
-                            type: "number",
-                        },
-                        {
-                            key: "cos",
-                            displayLabel: "COS Phi",
-                            visible: true,
-                            type: "number",
-                        },
-                    ]),
+                    ...(type === "general"
+                        ? [
+                              {
+                                  key: "puissance",
+                                  displayLabel: "Puissance",
+                                  visible: true,
+                                  type: "number",
+                              },
+                              {
+                                  key: "cos",
+                                  displayLabel: "COS Phi",
+                                  visible: true,
+                                  type: "number",
+                              },
+                          ]
+                        : []),
                 ]}
                 formFields={[
                     {
@@ -123,21 +125,23 @@ export default function Counter({ tables, type }) {
                         format: (val) => parseFloat(val).toFixed(2),
                         calculate: (values) => values.index - values.prev_index,
                     },
-                    ...(type === "general" && [
-                        {
-                            name: "puissance",
-                            label: "Puissance",
-                            type: "number",
-                            min: 0,
-                        },
-                        {
-                            name: "cos",
-                            label: "COS Phi",
-                            type: "number",
-                            min: 0,
-                            step: ".0001",
-                        },
-                    ]),
+                    ...(type === "general"
+                        ? [
+                              {
+                                  name: "puissance",
+                                  label: "Puissance",
+                                  type: "number",
+                                  min: 0,
+                              },
+                              {
+                                  name: "cos",
+                                  label: "COS Phi",
+                                  type: "number",
+                                  min: 0,
+                                  step: ".0001",
+                              },
+                          ]
+                        : []),
                 ]}
                 formDefaults={{
                     name: "",
@@ -158,7 +162,7 @@ export default function Counter({ tables, type }) {
                         onConfirm: (ids) => {
                             navigate({
                                 url: `${routeName}/multiple/destroy`,
-                                method: "post",
+                                method: "POST",
                                 data: { ids },
                             });
                         },
@@ -177,11 +181,17 @@ export default function Counter({ tables, type }) {
                     ],
                 }}
                 onAdd={(row) => {
+                    const { name, date, index, consummation, puissance, cos } =
+                        row;
                     navigate({
                         url: `${routeName}/store`,
-                        method: "post",
+                        method: "POST",
                         data: {
-                            ...row,
+                            name,
+                            date,
+                            index,
+                            consummation,
+                            ...(type === "general" && { puissance, cos }),
                             table_name: current,
                             centre_id: user.mainCentre.id,
                             counter: type,
@@ -191,7 +201,7 @@ export default function Counter({ tables, type }) {
                 onUpdate={(row) => {
                     navigate({
                         url: `${routeName}/update/${row.id}`,
-                        method: "put",
+                        method: "PUT",
                         data: row,
                     });
                 }}

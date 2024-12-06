@@ -79,17 +79,6 @@ export default function Users({ users }) {
                     isSuperAdmin: "false",
                 }}
                 fieldsToSearch={["name"]}
-                selectedOptions={{
-                    deleteOptions: {
-                        resourceName,
-                        onConfirm: (ids) =>
-                            navigate({
-                                url: "users.destroy",
-                                method: "post",
-                                data: { ids },
-                            }),
-                    },
-                }}
                 // filters={{
                 //   ...filterObject(options.filters, ['created_at'], 'include'),
                 //   ...getFilter('role', roles, 'name'),
@@ -101,7 +90,7 @@ export default function Users({ users }) {
                 onAdd={(data) => {
                     navigate({
                         url: "users.store",
-                        method: "post",
+                        method: "POST",
                         data: { ...data, centre_id: data.centre.id },
                     });
                 }}
@@ -109,7 +98,7 @@ export default function Users({ users }) {
                     navigate({
                         url: "data.update",
                         params: data.id,
-                        method: "put",
+                        method: "PUT",
                         data: { ...data, centre_id: data.centre.id },
                     });
                 }}

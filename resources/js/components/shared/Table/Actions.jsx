@@ -52,7 +52,7 @@ export function Actions({ row, actions, onUpdate }) {
                     onConfirm: () => {
                         navigate({
                             url: `${routeName}/destroy/${row.id}`,
-                            method: "delete",
+                            method: "DELETE",
                         });
                         rows?.length === 1 && onPaginate(page - 1);
                     },
