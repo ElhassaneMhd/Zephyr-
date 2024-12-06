@@ -51,10 +51,11 @@ export function Actions({ row, actions, onUpdate }) {
                     ...confirmOptions,
                     onConfirm: () => {
                         navigate({
-                            url: `${routeName}/destroy/${row.id}`,
+                            url: "row.destroy",
                             method: "DELETE",
+                            params: row.id,
                         });
-                        rows?.length === 1 && onPaginate(page - 1);
+                       //rows?.length === 1 && onPaginate(page - 1);
                     },
                 });
             },

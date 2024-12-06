@@ -72,8 +72,9 @@ class TableController extends Controller
     public function destroy($id)
     {
         $table = Table::findOrFail($id);
+        $counter = $table->counter;
         $table->delete();
-       // return redirect()->back();
+       return redirect('/electricite/'.$counter);
     }
     public function notFound()
     {
