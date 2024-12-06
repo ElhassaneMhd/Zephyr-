@@ -29,16 +29,13 @@ class TableController extends Controller
 
     public function getGenerale()
     {
-        $user = auth()->user();
-        $general = $user->centre->tables->where('counter', 'general')??[];
-        $tables = $this->refactorManyElements($general, 'tables');
+
+        $tables = $this->getCounters('general');
         return Inertia::render('Electricite/General',compact('tables'));
     }
     public function getDivisional()
     {
-        $user = auth()->user();
-        $general = $user->centre->tables->where('counter', 'divisional')??[];
-        $tables = $this->refactorManyElements($general, 'tables');
+        $tables =$tables = $this->getCounters('divisional');
         return Inertia::render('Electricite/Divisional',compact('tables'));
     }
 

@@ -8,8 +8,9 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use App\Traits\Refactor;
+use App\Traits\Get;
 
 
 class Controller extends BaseController{
-    use AuthorizesRequests, DispatchesJobs,ValidatesRequests,Refactor;
+    use AuthorizesRequests, DispatchesJobs,ValidatesRequests,Refactor,Get;
 }

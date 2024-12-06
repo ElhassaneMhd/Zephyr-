@@ -13,7 +13,11 @@ class HistoricController extends Controller
     {
         $table = Table::findOrFail($id);
         $historic = $table->historics;
-        if ($counter === 'general') return Inertia::render('Electricite/General', compact('tables', 'history'));
+        if ($counter === 'general') {
+            $tables = $this->getCounters('general');
+            return Inertia::render('Electricite/General', compact('tables', 'history'));
+        }
+        $tables = $this->getCounters('divisional');
         return Inertia::render('Electricite/Divisional', compact('tables', 'history'));
     }
 
