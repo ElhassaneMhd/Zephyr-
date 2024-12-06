@@ -38,11 +38,11 @@ class UserController extends Controller
         ]);
         $data['password'] = Hash::make($data['password']);
         $user->update($data);
-        return response()->json(['message'=>'User updated successfully']);
+        return to_route('users.index');
     }
     public function delete($id) {
         $user = User::find($id);
         $user->delete();
-        return response()->json(['message'=>'User deleted successfully']);
+        return to_route('users.index');
     }
 }

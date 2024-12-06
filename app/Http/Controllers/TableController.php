@@ -45,37 +45,38 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $centre = $request->user()->centre;
-        $request->validate([
+        $data =$request->validate([
             'table_name' => 'required',
             'name' => 'required',
-            'date' => 'required,date',
-            'index' => 'required,numeric',
-            'consummation' => 'required,numeric',
-            'centre_id' => $centre->id,
-            'counter' => 'required,in:general,divisional',
-            'cos' => 'required,numeric',
+            'date' => 'required',
+            'index' => 'required|numeric',
+            'puissance' => 'required|numeric',
+            'consummation' => 'required|numeric',
+            'counter' => 'required|in:general,divisional',
+            'cos' => 'required|numeric',
         ]);
-        Table::create($request->all());
+        $data['centre_id'] = $centre->id;
+        Table::create(attributes: $data);
         return redirect()->back();
     }
     public function update(Request $request, $id)
     {
         $table = Table::findOrFail($id);
         $request->validate([
-            'date' => 'required,date',
-            'index' => 'required,numeric',
-            'puissance' => 'required,numeric',
-            'consummation' => 'required,numeric',
-            "cost" => 'required,numeric',
+            'date' => 'required|date',
+            'index' => 'required|numeric',
+            'puissance' => 'required|numeric',
+            'consummation' => 'required|numeric',
+            "cos" => 'required|numeric',
         ]);
         $table->update($request->all());
         return redirect()->back();
     }
     public function destroy($id)
     {
-        dd($id);
         $table = Table::findOrFail($id);
         $table->delete();
+        return redirect()->back();
     }
     public function notFound()
     {
