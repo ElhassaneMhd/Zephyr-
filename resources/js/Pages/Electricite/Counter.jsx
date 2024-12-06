@@ -11,10 +11,11 @@ import { History } from "./History";
 const resourceName = "Record";
 const routeName = "/electricite";
 
-export default function Counter({ tables, type }) {
+export default function Counter({ type, tables, history }) {
     const [current, setCurrent] = useState(
         tables ? Object.keys(tables)[0] : null,
     );
+    const [isHistoryOpen, setIsHistoryOpen] = useState(Boolean(history));
     const { user } = useUser();
     const { navigate } = useNavigate();
 
@@ -169,7 +170,9 @@ export default function Counter({ tables, type }) {
                         },
                     },
                 }}
-                canView={console.log}
+                canView={(data) =>
+                    navigate({ url: `/row/${type}/${data.id}/history` })
+                }
                 layoutOptions={{
                     actions: (def) => [
                         {
@@ -207,9 +210,10 @@ export default function Counter({ tables, type }) {
                     });
                 }}
             />
-            <History />
+            <History
+                isOpen={isHistoryOpen}
+                onClose={() => setIsHistoryOpen(false)}
+            />
         </>
     );
 }
-
-

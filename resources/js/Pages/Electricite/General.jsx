@@ -1,5 +1,5 @@
 import Counter from "./Counter";
 
-export default function General({ tables }) {
-    return <Counter tables={tables} type="general" />;
+export default function General({ tables, history }) {
+    return <Counter type="general" tables={tables} history={history} />;
 }

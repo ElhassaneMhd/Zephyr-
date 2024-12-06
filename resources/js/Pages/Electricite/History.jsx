@@ -3,7 +3,7 @@ import { useConfirmationModal, useNavigate } from "@/hooks";
 import { formatDate } from "@/utils/helpers";
 import { IoTrashOutline } from "react-icons/io5";
 
-export function History() {
+export function History({ isOpen, onClose }) {
     const history = [
         {
             table_id: 1,
@@ -108,9 +108,9 @@ export function History() {
     ];
     return (
         <Modal
-            isOpen={false}
+            isOpen={isOpen}
             className="relative overflow-auto pt-3 sm:pt-5 md:h-[500px] md:w-[700px] md:border"
-            // onClose={() => navigate("/app/sessions")}
+            onClose={onClose}
             closeButton={false}
         >
             <div className="px-3 sm:px-5 grid grid-cols-[1fr,1fr,32px]  border-b border-border pb-3">

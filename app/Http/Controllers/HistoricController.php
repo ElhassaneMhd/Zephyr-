@@ -9,11 +9,12 @@ use Inertia\Inertia;
 
 class HistoricController extends Controller
 {
-    public function index($id)
+    public function index($counter, $id)
     {
         $table = Table::findOrFail($id);
         $historic = $table->historics;
-        return Inertia::render('Historic/Index', compact('historic', 'table'));
+        if ($counter === 'general') return Inertia::render('Electricite/General', compact('tables', 'history'));
+        return Inertia::render('Electricite/Divisional', compact('tables', 'history'));
     }
 
     public function destroy($id)

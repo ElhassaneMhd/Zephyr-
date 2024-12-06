@@ -1,5 +1,5 @@
 import Counter from "./Counter";
 
-export default function Divisional({ tables }) {
-    return <Counter tables={tables} type="divisional" />;
+export default function Divisional({ tables, history }) {
+    return <Counter type="divisional" tables={tables} history={history} />;
 }
