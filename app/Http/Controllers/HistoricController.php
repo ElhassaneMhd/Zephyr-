@@ -12,7 +12,7 @@ class HistoricController extends Controller
     public function index($counter, $id)
     {
         $table = Table::findOrFail($id);
-        $historic = $table->historics;
+        $history = $table->historics;
         if ($counter === 'general') {
             $tables = $this->getCounters('general');
             return Inertia::render('Electricite/General', compact('tables', 'history'));
@@ -25,6 +25,6 @@ class HistoricController extends Controller
     {
         $historic = Historic::findOrFail($id);
         $historic->delete();
-        return to_route('historic', $historic->table_id);
+        return to_route('history', ['counter'=>$historic->table->counter, 'id'=>$historic->table_id]);
     }
 }

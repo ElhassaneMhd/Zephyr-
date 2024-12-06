@@ -211,6 +211,7 @@ export default function Counter({ type, tables, history }) {
                 }}
             />
             <History
+                history={history}
                 isOpen={isHistoryOpen}
                 onClose={() => setIsHistoryOpen(false)}
             />

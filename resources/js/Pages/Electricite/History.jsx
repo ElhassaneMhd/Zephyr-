@@ -1,111 +1,9 @@
 import { Button, Modal } from "@/components/ui";
 import { useConfirmationModal, useNavigate } from "@/hooks";
-import { formatDate } from "@/utils/helpers";
 import { IoTrashOutline } from "react-icons/io5";
 
-export function History({ isOpen, onClose }) {
-    const history = [
-        {
-            table_id: 1,
-            date: "2024-12-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 2,
-            date: "2024-11-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 3,
-            date: "2024-10-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 4,
-            date: "2024-9-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 1,
-            date: "2024-12-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 2,
-            date: "2024-11-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 3,
-            date: "2024-10-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 4,
-            date: "2024-9-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 1,
-            date: "2024-12-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 2,
-            date: "2024-11-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 3,
-            date: "2024-10-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 4,
-            date: "2024-9-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 1,
-            date: "2024-12-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 2,
-            date: "2024-11-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 3,
-            date: "2024-10-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 4,
-            date: "2024-9-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 1,
-            date: "2024-12-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 2,
-            date: "2024-11-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 3,
-            date: "2024-10-13T23:01",
-            index: 454867.12,
-        },
-        {
-            table_id: 4,
-            date: "2024-9-13T23:01",
-            index: 454867.12,
-        },
-    ];
+export function History({ isOpen,history, onClose }) {
+
     return (
         <Modal
             isOpen={isOpen}
@@ -119,7 +17,7 @@ export function History({ isOpen, onClose }) {
                 <span></span>
             </div>
             <div className="overflow-y-auto">
-                {history.map((h, i) => (
+                {history&& history.map((h, i) => (
                     <HistoryItem key={i} {...h} />
                 ))}
             </div>
@@ -147,7 +45,7 @@ function HistoryItem({ index, date, id }) {
                         confirmText: "Delete",
                         onConfirm: () =>
                             navigate({
-                                url: `/row/${id}/historic/delete`,
+                                url: `/row/${id}/history/delete`,
                                 method: "DELETE",
                             }),
                     });

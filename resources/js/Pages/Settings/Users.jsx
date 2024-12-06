@@ -33,11 +33,13 @@ export default function Users({ users }) {
                         key: "centre",
                         displayLabel: "Centre",
                         visible: true,
+                        format: (value) => value.name,
                     },
                     {
-                        key: "Super Admin",
-                        displayLabel: "IsSuperAdmin",
+                        key: "isSuperAdmin",
+                        displayLabel: "Status",
                         visible: true,
+                        format: (value) => (value ==='true' ? "Super Admin" : "Admin"),
                     },
                 ]}
                 formFields={[
