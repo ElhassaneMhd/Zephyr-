@@ -6,6 +6,7 @@ import { formatDate } from "@/utils/helpers";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
 import { MdHistory } from "react-icons/md";
+import { History } from "./History";
 
 const resourceName = "Record";
 const routeName = "/electricite";
@@ -206,6 +207,9 @@ export default function Counter({ tables, type }) {
                     });
                 }}
             />
+            <History />
         </>
     );
 }
+
+
