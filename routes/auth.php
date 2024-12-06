@@ -24,8 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name(' row.update');
     Route::delete('/electricite/delete/{id}', [TableController::class ,'destroy'])->name('row.destroy');
 
-    Route::get('/row/{id}/historic', [HistoricController::class ,'index'])->name('historic');
-    Route::delete('/row/{id}/historic/delete', [HistoricController::class ,'destroy'])->name('historic.destroy');
+    Route::get('/row/{counter}/{id}/history', [HistoricController::class ,'index'])->name('history');
+    Route::delete('/row/{id}/history/delete', [HistoricController::class ,'destroy'])->name('history.destroy');
 
     Route::get('/eau', [TableController::class ,'notFound'])->name('eau');
     Route::get('/carburan', [TableController::class ,'notFound'])->name('carburan');
