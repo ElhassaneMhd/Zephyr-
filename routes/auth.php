@@ -22,10 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/electricite/divisional', [TableController::class ,'getDivisional'])->name('divisional');
     Route::post('/electricite/store', [TableController::class ,'store'])->name('row.store');
     Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name(' row.update');
-    Route::delete('/electricite/delete/{id}', [TableController::class ,'destroy'])->name('row.destroy');
+    Route::delete('/electricite/destroy/{id}', [TableController::class ,'destroy'])->name('row.destroy');
 
     Route::get('/row/{id}/historic', [HistoricController::class ,'index'])->name('historic');
-    Route::delete('/row/{id}/historic/delete', [HistoricController::class ,'destroy'])->name('historic.destroy');
+    Route::delete('/row/{id}/historic/destroy', [HistoricController::class ,'destroy'])->name('historic.destroy');
 
     Route::get('/eau', [TableController::class ,'notFound'])->name('eau');
     Route::get('/carburan', [TableController::class ,'notFound'])->name('carburan');
@@ -40,7 +40,7 @@ Route::middleware(['auth', CheckSuperAdmin::class])->group(function () {
     Route::get('/settings/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/settings/users', [UserController::class, 'store'])->name('users.store');
     Route::put('/settings/users/{id}/update', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/settings/users/{id}/delete', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::delete('/settings/users/{id}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
 
 
 

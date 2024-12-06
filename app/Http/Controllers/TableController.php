@@ -76,7 +76,7 @@ class TableController extends Controller
     {
         $table = Table::findOrFail($id);
         $table->delete();
-        return redirect()->back();
+       // return redirect()->back();
     }
     public function notFound()
     {
