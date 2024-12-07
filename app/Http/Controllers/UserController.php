@@ -21,7 +21,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             "centre_id"=>'required|exists:centres,id',
-            "isSuperAdmin"=>'in:true,false|default:false'
+            "isSuperAdmin"=>'in:true,false'
         ]);
         $data['password'] = Hash::make($data['password']);
         User::create($data);
@@ -31,12 +31,16 @@ class UserController extends Controller
         $user = User::find($id);
         $data = $request->validate([
             'name' => 'string',
-            'email' => 'email|unique:users,email',
-            'password' => 'string|min:6|confirmed',
+            'email' => 'email',
             "centre_id"=>'exists:centres,id',
-            "isSuperAdmin"=>'in:true,false|default:false'
+            "isSuperAdmin"=>'in:true,false'
         ]);
-        $data['password'] = Hash::make($data['password']);
+        if (isset($request->password)) {
+            $request->validate([
+                'password' => 'string|min:6|confirmed',
+            ]);
+            $data['password'] = Hash::make( $request->password);
+        }
         $user->update($data);
         return to_route('users.index');
     }

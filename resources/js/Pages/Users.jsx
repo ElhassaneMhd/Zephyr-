@@ -99,7 +99,7 @@ export default function Users({ users }) {
                 }}
                 onUpdate={(data) => {
                     navigate({
-                        url: "data.update",
+                        url: "users.update",
                         params: data.id,
                         method: "PUT",
                         data: { ...data, centre_id: data.centre.id },

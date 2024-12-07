@@ -54,7 +54,7 @@ class TableController extends Controller
         ]);
         $data['centre_id'] = $centre->id;
         Table::create(attributes: $data);
-        return redirect()->back();
+       return redirect('/electricite/'.$request->counter);
     }
     public function update(Request $request, $id)
     {
@@ -66,8 +66,10 @@ class TableController extends Controller
             'consummation' => 'required|numeric',
             "cos" => 'required|numeric',
         ]);
+                $counter = $table->counter;
+
         $table->update($request->all());
-        return redirect()->back();
+       return redirect('/electricite/'.$counter);
     }
     public function destroy($id)
     {
