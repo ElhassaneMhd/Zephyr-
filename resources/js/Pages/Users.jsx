@@ -89,6 +89,7 @@ export default function Users({ users }) {
                     actions: (def) => [def.edit, def.delete],
                     // displayNewRecord: false,
                 }}
+                canView={false}
                 onAdd={(data) => {
                     navigate({
                         url: "users.store",

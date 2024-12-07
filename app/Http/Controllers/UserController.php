@@ -13,7 +13,7 @@ class UserController extends Controller
         $user = auth()->user();
         $users = User::whereNot("id" , $user->id)->get();
         $users = $this->refactorManyElements($users,'users');
-        return Inertia::render('Users/Index',compact('users'));
+        return Inertia::render('Users',compact('users'));
     }
     public function store(Request $request) {
         $data = $request->validate([
