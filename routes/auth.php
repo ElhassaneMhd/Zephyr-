@@ -37,10 +37,10 @@ Route::middleware(['auth', CheckSuperAdmin::class])->group(function () {
      Route::get('/settings', function () {
         return redirect('/settings/users');
     });
-    Route::get('/settings/users', [UserController::class, 'index'])->name('users.index');
-    Route::post('/settings/users', [UserController::class, 'store'])->name('users.store');
-    Route::put('/settings/users/{id}/update', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/settings/users/{id}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
 
 
 
