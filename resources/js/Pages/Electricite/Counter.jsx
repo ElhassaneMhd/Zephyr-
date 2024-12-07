@@ -1,14 +1,14 @@
-import { Heading } from "@/components/Heading";
-import Tabs from "@/components/ui/Tabs";
-import { useNavigate, useUser } from "@/hooks";
-import { TableLayout } from "@/layouts/TableLayout";
-import { formatDate } from "@/utils/helpers";
-import { Head } from "@inertiajs/react";
-import { useState } from "react";
-import { MdHistory } from "react-icons/md";
-import { History } from "./History";
-import { Label } from "@/components/ui/InputField";
-import { DropDown } from "@/components/ui";
+import { Heading } from '@/components/Heading';
+import Tabs from '@/components/ui/Tabs';
+import { useNavigate, useUser } from '@/hooks';
+import { TableLayout } from '@/layouts/TableLayout';
+import { formatDate } from '@/utils/helpers';
+import { Head } from '@inertiajs/react';
+import { useState } from 'react';
+import { MdHistory } from 'react-icons/md';
+import { History } from './History';
+import { Label } from '@/components/ui/InputField';
+import { DropDown } from '@/components/ui';
 
 const resourceName = 'Record';
 const routeName = '/electricite';
@@ -74,23 +74,18 @@ export default function Counter({ type, tables, history }) {
         ]}
         formFields={[
           {
+            name: 'table_name',
+            customComponent: <TableNames />,
+            visible: (type) => type === 'create',
+          },
+          {
             name: 'name',
             label: 'Name',
             parentClassName: 'col-span-2',
             showIcon: false,
             readOnly: (type) => type === 'update',
           },
-          ...(!current
-            ? [
-                {
-                  name: 'tableName',
-                  label: 'Table Name',
-                  parentClassName: 'col-span-2',
-                  showIcon: false,
-                  visible: (type) => type === 'create',
-                },
-              ]
-            : []),
+
           {
             name: 'prev_date',
             label: 'Date Precedant',
@@ -146,7 +141,6 @@ export default function Counter({ type, tables, history }) {
                   type: 'number',
                   min: 0,
                   max: 1,
-                  step: '.0001',
                 },
               ]
             : []),
@@ -224,3 +218,36 @@ export default function Counter({ type, tables, history }) {
   );
 }
 
+function TableNames({ getValue, onChange, errorMessage }) {
+  const tables = ['Appartement', 'Club', 'Hotel'];
+
+  return (
+    <div className='col-span-2 flex flex-col gap-1.5'>
+      <Label label='Table Name' message={errorMessage} />
+      <DropDown
+        toggler={
+          <DropDown.Toggler>
+            <span className='capitalize'>
+              {(getValue('table_name') && getValue('table_name')) || 'Choose a table name'}
+            </span>
+          </DropDown.Toggler>
+        }
+        options={{
+          className: 'overflow-auto max-h-[300px] w-[230px]',
+          shouldCloseOnClick: false,
+        }}
+      >
+        {tables.map((t) => (
+          <DropDown.Option
+            key={t}
+            onClick={() => onChange(t)}
+            className='capitalize'
+            isCurrent={t === getValue('table_name') && getValue('table_name')}
+          >
+            {t}
+          </DropDown.Option>
+        ))}
+      </DropDown>
+    </div>
+  );
+}
