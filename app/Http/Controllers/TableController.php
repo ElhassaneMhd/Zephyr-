@@ -47,11 +47,17 @@ class TableController extends Controller
             'name' => 'required',
             'date' => 'required',
             'index' => 'required|numeric',
-            'puissance' => 'required|numeric',
             'consummation' => 'required|numeric',
             'counter' => 'required|in:general,divisional',
-            'cos' => 'required|numeric',
         ]);
+        if ( $data['counter'] == 'general'){
+            $request->validate([
+                'cos' => 'required|numeric',
+                'puissance' => 'required|numeric',
+            ]);
+            $data['cos'] = $request->cos;
+            $data['puissance'] = $request->puissance;
+        }
         $data['centre_id'] = $centre->id;
         Table::create(attributes: $data);
        return redirect('/electricite/'.$request->counter);
@@ -61,7 +67,6 @@ class TableController extends Controller
         $table = Table::findOrFail($id);
         $request->validate([
             'date' => 'required|date',
-            'index' => 'required|numeric',
             'puissance' => 'numeric',
             'consummation' => 'required|numeric',
             "cos" => 'numeric',

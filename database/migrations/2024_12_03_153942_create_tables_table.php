@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('table_name');
             $table->string('name');
             $table->datetime('date');
-            $table->decimal('index');
-            $table->decimal('consummation');
-            $table->decimal('puissance')->nullable();
-            $table->decimal('cos')->nullable();
+            $table->double('index');
+            $table->double('consummation');
+            $table->double('puissance')->nullable();
+            $table->double('cos')->nullable();
             $table->foreignId('centre_id')->constrained()->cascadeOnDelete();
             $table->enum('counter' ,['general' ,'divisional'])->nullable();
             $table->timestamps();
