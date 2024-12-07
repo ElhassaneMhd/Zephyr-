@@ -7,6 +7,8 @@ import { Head } from "@inertiajs/react";
 import { useState } from "react";
 import { MdHistory } from "react-icons/md";
 import { History } from "./History";
+import { Label } from "@/components/ui/InputField";
+import { DropDown } from "@/components/ui";
 
 const resourceName = "Record";
 const routeName = "/electricite";
@@ -51,7 +53,7 @@ export default function Counter({ type, tables, history }) {
                         displayLabel: "Date",
                         visible: true,
                         type: "date",
-                        format: (val) => formatDate(val, true),
+                        format: (val) =>  formatDate(val, true),
                     },
                     {
                         key: "index",
@@ -83,6 +85,10 @@ export default function Counter({ type, tables, history }) {
                         : []),
                 ]}
                 formFields={[
+                    {
+                        name: "table_name",
+                        customComponent: <TableNames/>,
+                    },
                     {
                         name: "name",
                         label: "Name",
@@ -147,6 +153,7 @@ export default function Counter({ type, tables, history }) {
                 ]}
                 formDefaults={{
                     name: "",
+                    table_name: current,
                     prev_date: "2024-12-13T23:01",
                     prev_index: 454867.12,
                     date: "",
@@ -185,18 +192,25 @@ export default function Counter({ type, tables, history }) {
                     ],
                 }}
                 onAdd={(row) => {
-                    const { name, date, index, consummation, puissance, cos } =
-                        row;
+                    const {
+                        name,
+                        date,
+                        index,
+                        consummation,
+                        puissance,
+                        cos,
+                        table_name,
+                    } = row;
                     navigate({
                         url: `${routeName}/store`,
                         method: "POST",
                         data: {
+                            table_name,
                             name,
                             date,
                             index,
                             consummation,
                             ...(type === "general" && { puissance, cos }),
-                            table_name: current,
                             centre_id: user.mainCentre.id,
                             counter: type,
                         },
@@ -216,5 +230,44 @@ export default function Counter({ type, tables, history }) {
                 onClose={() => setIsHistoryOpen(false)}
             />
         </>
+    );
+}
+
+function TableNames({ getValue, onChange, errorMessage }) {
+    const tables =  ["Appartement", "Club", "Hotel"];
+
+    return (
+        <div className="flex flex-col gap-1.5 col-span-2">
+            <Label label="Table Name" message={errorMessage} />
+            <DropDown
+                toggler={
+                    <DropDown.Toggler>
+                        <span className="capitalize">
+                            {(getValue("table_name") &&
+                                getValue("table_name")) ||
+                                "Choose a table name"}
+                        </span>
+                    </DropDown.Toggler>
+                }
+                options={{
+                    className: "overflow-auto max-h-[300px] w-[230px]",
+                    shouldCloseOnClick: false,
+                }}
+            >
+                {tables.map((t) => (
+                    <DropDown.Option
+                        key={t}
+                        onClick={() => onChange(t)}
+                        className="capitalize"
+                        isCurrent={
+                            t === getValue("table_name") &&
+                            getValue("table_name")
+                        }
+                    >
+                        {t}
+                    </DropDown.Option>
+                ))}
+            </DropDown>
+        </div>
     );
 }
