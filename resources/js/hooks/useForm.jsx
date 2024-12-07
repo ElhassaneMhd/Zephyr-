@@ -10,7 +10,7 @@ const getError = (value, rules, getValue) => {
   if (!rules) return null;
 
   // Required
-  if (rules.required && typeof value !== 'boolean' && !value) {
+  if (rules.required && typeof value !== 'boolean' && (value == null || value === '')) {
     const required = rules.required;
     return {
       type: 'required',
@@ -147,7 +147,7 @@ export function useForm({ fields: defFields, defaultValues: def, gridLayout, onS
             placeholder={placeholder || label}
             value={value}
             onChange={(e) => {
-              const value =  e.target.value 
+              const value = e.target.value;
               validate(name, e.target.value, getRules(name, label, type, rules));
               setValue(name, type === 'number' && value ? +value : value);
             }}

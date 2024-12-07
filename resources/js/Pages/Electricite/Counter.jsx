@@ -1,9 +1,8 @@
-import { DateTime } from 'luxon';
 import { Heading } from '@/components/Heading';
 import Tabs from '@/components/ui/Tabs';
 import { useNavigate, useUser } from '@/hooks';
 import { TableLayout } from '@/layouts/TableLayout';
-import { formatDate, getIsoDate } from '@/utils/helpers';
+import { formatDate, getFirstOfCurrentMonthAtMidnight, getIsoDate } from '@/utils/helpers';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { MdHistory } from 'react-icons/md';
@@ -13,11 +12,6 @@ import { DropDown } from '@/components/ui';
 
 const resourceName = 'Record';
 const routeName = '/electricite';
-
-function getFirstOfCurrentMonthAtMidnight() {
-  const firstOfMonth = DateTime.local().startOf('month');
-  return firstOfMonth.toFormat("yyyy-MM-dd'T'HH:mm:ss");
-}
 
 export default function Counter({ type, tables, history }) {
   const [current, setCurrent] = useState(tables ? Object.keys(tables)[0] : null);
@@ -117,7 +111,6 @@ export default function Counter({ type, tables, history }) {
             name: 'date',
             label: 'Date',
             type: 'datetime-local',
-            // readOnly: true,
             showIcon: false,
             parentClassName: (type) => (type === 'create' ? 'col-span-2' : ''),
           },
@@ -140,8 +133,6 @@ export default function Counter({ type, tables, history }) {
             name: 'consummation',
             label: 'Consommation',
             type: 'number',
-            min: 0,
-            rules: { min: { value: 0, message: 'Consummation cannot be less than 0' } },
             step: '.01',
             parentClassName: 'col-span-2',
             readOnly: true,
@@ -175,6 +166,7 @@ export default function Counter({ type, tables, history }) {
         formDefaults={formDefaults}
         updateDefaultValues={(row) => {
           return {
+            id:row.id,
             ...formDefaults,
             name: row.name,
             prev_date: getIsoDate(row.date).toFormat("yyyy-MM-dd'T'HH:mm:ss"),

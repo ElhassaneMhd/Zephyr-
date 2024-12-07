@@ -1,4 +1,4 @@
-import { TableProvider as Table } from "@/components/shared/Table/TableProvider";
+import { TableProvider as Table } from "@/components/Table/TableProvider";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const defaultOptions = {
