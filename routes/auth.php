@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/electricite/store', [TableController::class ,'store'])->name('row.store');
     Route::put('/electricite/update/{id}', [TableController::class ,'update'])->name(' row.update');
     Route::delete('/electricite/destroy/{id}', [TableController::class ,'destroy'])->name('row.destroy');
+    Route::post('/electricite/multiple/destroy', [TableController::class ,'multipleDestroy'])->name('row.multiple.destroy');
 
     Route::get('/row/{counter}/{id}/history', [HistoricController::class ,'index'])->name('history');
     Route::delete('/row/{id}/history/delete', [HistoricController::class ,'destroy'])->name('history.destroy');
