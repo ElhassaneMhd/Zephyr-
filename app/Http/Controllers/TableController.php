@@ -76,6 +76,14 @@ class TableController extends Controller
         $table->delete();
        return redirect('/electricite/'.$counter);
     }
+    public function multipleDestroy(Request $request)
+    {
+        $ids = $request->ids ??[];
+        $table = Table::findOrFail($ids[0]);
+        $counter = $table->counter;
+        Table::whereIn('id',$ids)->delete();
+       return redirect('/electricite/'.$counter);
+    }
     public function notFound()
     {
         return Inertia::render('UnderConstruction');
