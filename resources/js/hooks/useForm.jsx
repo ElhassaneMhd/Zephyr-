@@ -92,12 +92,13 @@ const getRules = (name, label, type, fieldRules) => {
 };
 
 export function useForm({
-    fields,
+    fields : defFields,
     defaultValues: def,
     gridLayout,
     onSubmit,
     submitOnEnter,
 }) {
+    const [fields,setFields] = useState(defFields)
     const [defaultValues, setDefaultValues] = useState(def);
     const [values, setValues] = useState(def);
     const [isUpdated, setIsUpdated] = useState(false);
@@ -227,6 +228,8 @@ export function useForm({
         setDefaultValues(values);
     };
 
+    const updateFields = (newFields) => setFields(newFields)
+
     // Validate fields
     const validate = (name, value, rules) => {
         const err = getError(value, rules, getValue);
@@ -317,6 +320,7 @@ export function useForm({
             getValue,
             setValue,
             updateValues,
+            updateFields
         },
     };
 }
@@ -324,7 +328,7 @@ export function useForm({
 const Input = ({ type, name, ...props }) => {
     const filteredProps = filterObject(
         props,
-        ["format", "rules", "calculate"],
+        ["format", "rules", "calculate","visible"],
         "exclude",
     );
 

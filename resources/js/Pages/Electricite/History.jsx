@@ -2,11 +2,10 @@ import { Button, Modal } from "@/components/ui";
 import { useConfirmationModal, useNavigate } from "@/hooks";
 import { IoTrashOutline } from "react-icons/io5";
 
-export function History({ isOpen,history, onClose }) {
-
+export function History({ history, onClose }) {
     return (
         <Modal
-            isOpen={isOpen}
+            isOpen={Boolean(history)}
             className="relative overflow-auto pt-3 sm:pt-5 md:h-[500px] md:w-[700px] md:border"
             onClose={onClose}
             closeButton={false}
@@ -17,9 +16,8 @@ export function History({ isOpen,history, onClose }) {
                 <span></span>
             </div>
             <div className="overflow-y-auto">
-                {history&& history.map((h, i) => (
-                    <HistoryItem key={i} {...h} />
-                ))}
+                {history &&
+                    history.map((h, i) => <HistoryItem key={i} {...h} />)}
             </div>
         </Modal>
     );
