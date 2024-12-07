@@ -147,8 +147,9 @@ export function useForm({ fields: defFields, defaultValues: def, gridLayout, onS
             placeholder={placeholder || label}
             value={value}
             onChange={(e) => {
+              const value =  e.target.value 
               validate(name, e.target.value, getRules(name, label, type, rules));
-              setValue(name, type === 'number' ? +e.target.value : e.target.value);
+              setValue(name, type === 'number' && value ? +value : value);
             }}
             errorMessage={errors?.[name]?.message}
             type={type || 'text'}
