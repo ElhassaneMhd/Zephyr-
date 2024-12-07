@@ -16,7 +16,7 @@ export function History({ history, onClose }) {
                 <span className="font-medium py-3 text-text-tertiary">Index</span>
                 <span></span>
             </div>
-            <div className="overflow-y-auto">
+            <div className="border-b border-border overflow-y-auto">
                 {history &&
                     history.map((h, i) => <HistoryItem key={i} {...h} />)}
             </div>
