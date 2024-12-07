@@ -62,9 +62,9 @@ class TableController extends Controller
         $request->validate([
             'date' => 'required|date',
             'index' => 'required|numeric',
-            'puissance' => 'required|numeric',
+            'puissance' => 'numeric',
             'consummation' => 'required|numeric',
-            "cos" => 'required|numeric',
+            "cos" => 'numeric',
         ]);
                 $counter = $table->counter;
 

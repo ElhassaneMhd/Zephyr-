@@ -44,7 +44,7 @@ class UserController extends Controller
         $user->update($data);
         return to_route('users.index');
     }
-    public function delete($id) {
+    public function destroy($id) {
         $user = User::find($id);
         $user->delete();
         return to_route('users.index');
