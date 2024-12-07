@@ -193,7 +193,7 @@ export default function Counter({ type, tables, history }) {
             {
               text: 'History',
               icon: <MdHistory />,
-              onClick: (row) => console.log(row),
+              onClick: (row) => navigate({ url: `/row/${type}/${row.id}/history` }),
             },
             def.edit,
             def.delete,
