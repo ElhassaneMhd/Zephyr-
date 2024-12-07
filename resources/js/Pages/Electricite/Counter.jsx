@@ -18,6 +18,20 @@ export default function Counter({ type, tables, history }) {
   const { user } = useUser();
   const { navigate } = useNavigate();
 
+  const formDefaults = {
+    table_name: current,
+    name: '',
+    prev_date: '',
+    prev_index: 0,
+    date: '',
+    index: 0,
+    consummation: 0,
+    ...(type === 'general' && {
+      puissance: 0,
+      cos: 0,
+    }),
+  };
+
   return (
     <>
       <Head title={`Electricite | Compteur ${type === 'general' ? 'General' : 'Divisionnel'}`} />
@@ -85,7 +99,6 @@ export default function Counter({ type, tables, history }) {
             showIcon: false,
             readOnly: (type) => type === 'update',
           },
-
           {
             name: 'prev_date',
             label: 'Date Precedant',
@@ -114,6 +127,7 @@ export default function Counter({ type, tables, history }) {
             label: 'Index',
             type: 'number',
             min: 0,
+            rules: { min: { value: 0, message: 'Index cannot be less than 0' } },
             step: '.01',
           },
           {
@@ -121,10 +135,11 @@ export default function Counter({ type, tables, history }) {
             label: 'Consommation',
             type: 'number',
             min: 0,
+            rules: { min: { value: 0, message: 'Consummation cannot be less than 0' } },
             step: '.01',
             parentClassName: 'col-span-2',
             readOnly: true,
-            format: (val) => parseFloat(val).toFixed(2),
+            format: (val) => Number(parseFloat(val).toFixed(2)),
             calculate: (values) => values.index - values.prev_index,
           },
           ...(type === 'general'
@@ -134,34 +149,30 @@ export default function Counter({ type, tables, history }) {
                   label: 'Puissance',
                   type: 'number',
                   min: 0,
+                  rules: { min: { value: 0, message: 'Puissance cannot be less than 0' } },
                 },
                 {
                   name: 'cos',
                   label: 'COS Phi',
                   type: 'number',
+                  step: '.0001',
                   min: 0,
                   max: 1,
+                  rules: {
+                    min: { value: 0, message: 'COS Phi cannot be less than 0' },
+                    max: { value: 1, message: 'COS Phi cannot be greater than 1' },
+                  },
                 },
               ]
             : []),
         ]}
-        formDefaults={{
-          name: '',
-          prev_date: '',
-          prev_index: 0,
-          date: '',
-          index: 0,
-          consummation: 0,
-          ...(type === 'general' && {
-            puissance: 0,
-            cos: 0,
-          }),
-        }}
+        formDefaults={formDefaults}
         updateDefaultValues={(row) => ({
+          ...formDefaults,
           name: row.name,
           prev_date: row.date,
           prev_index: row.index,
-          index: 0,
+          consummation: 0 - row.index,
         })}
         fieldsToSearch={['name']}
         selectedOptions={{

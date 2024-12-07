@@ -12,9 +12,6 @@ import { useNavigate } from '@/hooks/useNavigate';
 export function Actions({ row, actions, onUpdate }) {
   const {
     confirmOptions,
-    rows,
-    page,
-    onPaginate,
     routeName,
     formOptions: { fields, defaultValues, updateDefaultValues },
     showForm,

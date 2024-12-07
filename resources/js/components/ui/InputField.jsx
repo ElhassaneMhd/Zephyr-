@@ -112,6 +112,7 @@ export const InputField = forwardRef(
   ) => {
     const icon = showIcon && (icons[name] || icons[type]);
 
+
     return (
       <div className={`flex flex-col gap-1.5 ${parentClassName}`}>
         <Label label={label} message={errorMessage} />
