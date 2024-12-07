@@ -5,11 +5,11 @@ import { twMerge } from 'tailwind-merge';
 //*------ Dates And Time
 export const getIsoDate = (date) => DateTime.fromISO(new Date(date).toISOString());
 
-export const formatDate = (date, includeTime) => {
+export const formatDate = (date, includeTime, format) => {
   if (!date) return null;
   return getIsoDate(date)
     .setLocale('fr')
-    .toLocaleString(includeTime ? DateTime.DATETIME_SHORT : DateTime.DATE_FULL);
+    .toLocaleString(includeTime ? DateTime[format || 'DATETIME_SHORT'] : DateTime[format || 'DATE_FULL']);
 };
 
 export const getFirstOfCurrentMonthAtMidnight = () => {

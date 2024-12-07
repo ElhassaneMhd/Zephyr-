@@ -164,6 +164,7 @@ export default function Counter({ type, tables, history }) {
             : []),
         ]}
         formDefaults={formDefaults}
+        // hack
         updateDefaultValues={(row) => {
           return {
             id:row.id,

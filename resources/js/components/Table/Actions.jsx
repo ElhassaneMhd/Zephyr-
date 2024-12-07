@@ -33,7 +33,7 @@ export function Actions({ row, actions, onUpdate }) {
           fields: fields.map((field) =>
             field.name.includes('password') ? { ...field, rules: { ...field.rules, required: false } } : field
           ),
-          defaultValues: updateDefaultValues  ? updateDefaultValues(row) : { ...defaultValues, ...row },
+          defaultValues: updateDefaultValues ? updateDefaultValues(row) : { ...defaultValues, ...row },
           onSubmit: (data) => onUpdate(data),
           isOpen: true,
           submitButtonText: 'Save Changes',
@@ -47,14 +47,7 @@ export function Actions({ row, actions, onUpdate }) {
       onClick: () => {
         openModal({
           ...confirmOptions,
-          onConfirm: () => {
-            navigate({
-              url: "row.destroy",
-              method: 'DELETE',
-                            params: row.id,
-            });
-           //rows?.length === 1 && onPaginate(page - 1);
-          },
+          onConfirm: () => navigate({ url: `${routeName}/destroy/${row.id}`, method: 'DELETE' }),
         });
       },
     },

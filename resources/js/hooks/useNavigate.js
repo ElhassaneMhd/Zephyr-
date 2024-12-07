@@ -17,6 +17,7 @@ export const useNavigate = () => {
 
             const routeOptions = {
                 onError: (e) => {
+                    console.log(e)
                     setError(e);
                     e &&
                         Object.keys(e).length &&
