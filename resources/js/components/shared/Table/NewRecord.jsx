@@ -16,9 +16,9 @@ export function NewRecord({ onAdd, component, label }) {
                 type: "create",
             }),
         );
-    return (
+        return (
         <Button
-            display="with-icon"
+        display="with-icon"
             className="text-nowrap"
             onClick={() => {
                 showForm({
@@ -26,6 +26,7 @@ export function NewRecord({ onAdd, component, label }) {
                     onSubmit: (data) => onAdd(data),
                     defaultValues: formOptions.defaultValues,
                     submitButtonText: "Create",
+                    type: "create",
                 });
             }}
         >
