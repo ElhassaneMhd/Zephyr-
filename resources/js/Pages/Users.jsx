@@ -31,7 +31,7 @@ export default function Users({ users }) {
           },
           {
             key: 'centre',
-            displayLabel: 'Centre',
+            displayLabel: 'Center',
             visible: true,
             format: (value) => value.name,
           },
