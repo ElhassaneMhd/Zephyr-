@@ -1,5 +1,3 @@
-import { HiMiniXMark, FiCheck, BsSendFill } from '@/components/ui/Icons';
-import { Button } from '.';
 
 const NoResults = ({ heading, message, size }) => {
   return (
