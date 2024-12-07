@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('table_name');
             $table->string('name');
-            $table->date('date');
+            $table->datetime('date');
             $table->integer('index');
             $table->integer('consummation');
             $table->integer('puissance')->nullable();

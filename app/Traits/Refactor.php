@@ -15,19 +15,22 @@ trait Refactor
     }
     protected function refactorTable($table)
     {
+       // dd($table);
         $centre = $table->centre;
+        $date = new \DateTime($table->date);
+
         return [
             'id' => $table->id,
             'name' => $table->name,
-            'date' => $table->date,
+            'date' => $date->format('Y-m-dTH:i:s'),
             'index' => $table->index,
             'consummation' => $table->consummation,
             "cos" => $table->cos,
             "puissance" => $table->puissance,
             'centre' => $centre->name,
             'counter' => $table->counter,
-            'created_at' => $table->created_at,
-            'updated_at' => $table->updated_at,
+            "created_at" => $table->created_at->format('Y-m-dTH:i:s'),
+            "updated_at" => $table->updated_at->format('Y-m-dTH:i:s'),
         ];
     }
     protected function refactorUser($user)
@@ -39,8 +42,8 @@ trait Refactor
             "email" => $user->email,
             "isSuperAdmin" => $user->isSuperAdmin,
             "centre" => $centre ? $this->refactorCentre($centre) : null,
-            "created_at" => $user->created_at,
-            "updated_at" => $user->updated_at,
+            "created_at" => $user->created_at->format('Y-m-d H:i:s'),
+            "updated_at" => $user->updated_at->format('Y-m-d H:i:s'),
         ];
     }
     protected function refactorCentre($centre)
