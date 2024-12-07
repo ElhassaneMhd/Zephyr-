@@ -4,6 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="This project was originally made by two competent developers Walid Zakan & Elhassane Mehdioui
+    To contact : www.linkedin.com/in/walid-zakan-814996257 | www.linkedin.com/in/elhassanmhd
+    ">
 
     <title inertia>{{ config('app.name', 'Zephyr') }}</title>
 
