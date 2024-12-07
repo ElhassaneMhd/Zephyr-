@@ -47,6 +47,7 @@ export function TableRecord() {
           return {
             ...f,
             readOnly: typeof f.readOnly === 'function' ? f.readOnly(type) : f.readOnly,
+            parentClassName: typeof f.parentClassName === 'function' ? f.parentClassName(type) : f.parentClassName,
           };
         })
     );

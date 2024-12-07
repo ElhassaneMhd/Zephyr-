@@ -1,8 +1,9 @@
+import { DateTime } from 'luxon';
 import { Heading } from '@/components/Heading';
 import Tabs from '@/components/ui/Tabs';
 import { useNavigate, useUser } from '@/hooks';
 import { TableLayout } from '@/layouts/TableLayout';
-import { formatDate } from '@/utils/helpers';
+import { formatDate, getIsoDate } from '@/utils/helpers';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { MdHistory } from 'react-icons/md';
@@ -12,6 +13,11 @@ import { DropDown } from '@/components/ui';
 
 const resourceName = 'Record';
 const routeName = '/electricite';
+
+function getFirstOfCurrentMonthAtMidnight() {
+  const firstOfMonth = DateTime.local().startOf('month');
+  return firstOfMonth.toFormat("yyyy-MM-dd'T'HH:mm:ss");
+}
 
 export default function Counter({ type, tables, history }) {
   const [current, setCurrent] = useState(tables ? Object.keys(tables)[0] : null);
@@ -23,7 +29,7 @@ export default function Counter({ type, tables, history }) {
     name: '',
     prev_date: '',
     prev_index: 0,
-    date: '',
+    date: getFirstOfCurrentMonthAtMidnight(),
     index: 0,
     consummation: 0,
     ...(type === 'general' && {
@@ -108,19 +114,19 @@ export default function Counter({ type, tables, history }) {
             visible: (type) => type === 'update',
           },
           {
+            name: 'date',
+            label: 'Date',
+            type: 'datetime-local',
+            // readOnly: true,
+            showIcon: false,
+            parentClassName: (type) => (type === 'create' ? 'col-span-2' : ''),
+          },
+          {
             name: 'prev_index',
             label: 'Index Precedant',
             type: 'number',
             step: '.01',
-            readOnly: true,
-            visible: (type) => type === 'update',
-          },
-          {
-            name: 'date',
-            label: 'Date',
-            type: 'datetime-local',
-            readOnly: true,
-            showIcon: false,
+            readOnly: (type) => type === 'update',
           },
           {
             name: 'index',
@@ -167,13 +173,16 @@ export default function Counter({ type, tables, history }) {
             : []),
         ]}
         formDefaults={formDefaults}
-        updateDefaultValues={(row) => ({
-          ...formDefaults,
-          name: row.name,
-          prev_date: row.date,
-          prev_index: row.index,
-          consummation: 0 - row.index,
-        })}
+        updateDefaultValues={(row) => {
+          return {
+            ...formDefaults,
+            name: row.name,
+            prev_date: getIsoDate(row.date).toFormat("yyyy-MM-dd'T'HH:mm:ss"),
+            prev_index: row.index,
+            consummation: (row.prev_index ?? 0) - row.index,
+            date: getFirstOfCurrentMonthAtMidnight(),
+          };
+        }}
         fieldsToSearch={['name']}
         selectedOptions={{
           deleteOptions: {
