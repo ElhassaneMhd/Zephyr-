@@ -63,7 +63,7 @@ export {
   MdOutlineTimelapse,
   MdOutlinePendingActions,
   MdOutlineSettingsBackupRestore,
-  MdOutlinePreview 
+  MdOutlinePreview
 } from 'react-icons/md';
 export {
   FaSpinner,
@@ -109,3 +109,4 @@ export { MdElectricBolt, MdOutlineEnergySavingsLeaf } from "react-icons/md";
 export { RiGasStationLine } from "react-icons/ri";
 export { IoWaterOutline } from "react-icons/io5";
 export { LiaFireSolid } from "react-icons/lia";
+export { HiOutlineUsers } from "react-icons/hi";

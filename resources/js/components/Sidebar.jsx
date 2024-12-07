@@ -5,12 +5,12 @@ import {
     BsLayoutSidebarInsetReverse,
     FiLogOut,
     IoChevronDownOutline,
-    IoSettingsOutline,
     IoWaterOutline,
     LiaFireSolid,
     MdElectricBolt,
     MdOutlineEnergySavingsLeaf,
     RiGasStationLine,
+    HiOutlineUsers,
 } from "./ui/Icons";
 
 import { Button } from "./ui";
@@ -19,20 +19,23 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useConfirmationModal, useNavigate, useUser } from "@/hooks";
 import { Logo } from "./ui/Logo";
 
-
 const routes = [
     {
-        icon: <MdElectricBolt  />,
+        icon: <MdElectricBolt />,
         label: "Électricité",
         sub: [
             { label: "Compteur General", href: "/electricite/general" },
             { label: "Compteur Divisionnel", href: "/electricite/divisional" },
         ],
     },
-    { icon: <IoWaterOutline  />, label: "Eau", href: "/eau" },
-    { icon: <RiGasStationLine  />, label: "Carburan", href: "/carburan" },
-    { icon: <LiaFireSolid   />, label: "Gaz", href: "/gaz" },
-    { icon: <MdOutlineEnergySavingsLeaf  />, label: "Biomasse", href: "/biomasse" },
+    { icon: <IoWaterOutline />, label: "Eau", href: "/eau" },
+    { icon: <RiGasStationLine />, label: "Carburan", href: "/carburan" },
+    { icon: <LiaFireSolid />, label: "Gaz", href: "/gaz" },
+    {
+        icon: <MdOutlineEnergySavingsLeaf />,
+        label: "Biomasse",
+        href: "/biomasse",
+    },
 ];
 
 export default function Sidebar() {
@@ -65,7 +68,7 @@ export default function Sidebar() {
                         isExpanded ? "w-20 flex-1 scale-100" : "h-0 w-0 scale-0"
                     }
                 >
-                   <Logo />
+                    <Logo />
                 </div>
                 <Button
                     shape="icon"
@@ -100,10 +103,10 @@ export default function Sidebar() {
                         <Button
                             shape="icon"
                             onClick={() => {
-                                navigate({ url: "/settings" });
+                                navigate({ url: "/users" });
                             }}
                         >
-                            <IoSettingsOutline className="text-text-tertiary" />
+                            <HiOutlineUsers className="text-text-tertiary" />
                         </Button>
                     )}
                     <Button
