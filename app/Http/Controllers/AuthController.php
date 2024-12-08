@@ -31,9 +31,9 @@ class AuthController extends Controller{
 
 
         if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return to_route(route: 'formLogin');
         }
-        return to_route('general');
+        return to_route(route: 'formLogin');
     }
 // logout
     public function logout(Request $request) {
@@ -46,5 +46,5 @@ class AuthController extends Controller{
         $user = auth()->user();
         return response()->json($user);
     }
-   
+
 }

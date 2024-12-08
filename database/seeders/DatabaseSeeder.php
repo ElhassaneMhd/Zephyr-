@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
         Table::factory(50)->create();
         // Historic::factory(10)->create();
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Super Admin',
+            'email' => 'superadmin@zephyr.com',
             "isSuperAdmin" => 'true',
         ]);
         User::factory()->create([
-            'name' => 'hassan',
-            'email' => 'hassan@gmail.com',
+            'name' => 'Admin',
+            'email' => 'admin@zephyr.com',
             "isSuperAdmin" => 'false',
         ]);
         Centre::factory()->create(['name' => 'Mazagan']);
