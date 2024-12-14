@@ -17,7 +17,7 @@ class TableFactory extends Factory
     public function definition(): array
     {
         return [
-            "table_name" => $this->faker->randomElement(["Hotel","Apppartement","Club"]),
+            "table_name" => $this->faker->randomElement(["Hotel","Appartement","Club"]),
             "name" => $this->faker->randomElement(["Jardin","1er Etage","piscine","2eme Etage" , "Heures normales" , "Heures creuses" ,"Heures pointes"]),
             "date" => $this->faker->dateTime(),
             "index" => $this->faker->randomFloat(2, 0, 9999),

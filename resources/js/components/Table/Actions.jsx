@@ -8,6 +8,7 @@ import {
 import { useTable } from './useTable';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useNavigate } from '@/hooks/useNavigate';
+import { FaPlus } from 'react-icons/fa';
 
 export function Actions({ row, actions, onUpdate }) {
   const {
@@ -19,6 +20,18 @@ export function Actions({ row, actions, onUpdate }) {
   const { openModal } = useConfirmationModal();
   const { navigate } = useNavigate();
 
+  const newSaisie = () => {
+    showForm({
+      fields: fields.map((field) =>
+        field.name.includes('password') ? { ...field, rules: { ...field.rules, required: false } } : field
+      ),
+      defaultValues: updateDefaultValues ? updateDefaultValues(row) : { ...defaultValues, ...row },
+      onSubmit: (data) => onUpdate(data),
+      isOpen: true,
+      submitButtonText: 'Save Changes',
+      type: 'update',
+    });
+  };
   const defaultActions = {
     view: {
       text: 'View',
@@ -28,18 +41,7 @@ export function Actions({ row, actions, onUpdate }) {
     edit: {
       text: 'Edit',
       icon: <MdDriveFileRenameOutline />,
-      onClick: () => {
-        showForm({
-          fields: fields.map((field) =>
-            field.name.includes('password') ? { ...field, rules: { ...field.rules, required: false } } : field
-          ),
-          defaultValues: updateDefaultValues ? updateDefaultValues(row) : { ...defaultValues, ...row },
-          onSubmit: (data) => onUpdate(data),
-          isOpen: true,
-          submitButtonText: 'Save Changes',
-          type: 'update',
-        });
-      },
+      onClick: () => newSaisie(),
     },
     delete: {
       text: 'Delete',
@@ -61,27 +63,39 @@ export function Actions({ row, actions, onUpdate }) {
   };
 
   return (
-    <DropDown
-      toggler={
-        <Button shape='icon'>
-          <IoEllipsisHorizontalSharp />
-        </Button>
-      }
-    >
-      {getActions()
-        .filter((action) => !action.hidden?.(row))
-        .map((action) => (
-          <DropDown.Option
-            key={action.text}
-            onClick={(e) => {
-              e.stopPropagation();
-              action.onClick(row);
-            }}
-          >
-            {action.icon}
-            {action.text}
-          </DropDown.Option>
-        ))}
-    </DropDown>
+    <div className='flex gap-1'>
+      {routeName !=='users'&& <Button
+        onClick={(e) => {
+          newSaisie();
+          e.stopPropagation();
+        }}
+        display={'with-icon'}
+        color={'tertiary'}
+      >
+        <FaPlus /> new Saisie
+      </Button>}
+      <DropDown
+        toggler={
+          <Button shape='icon'>
+            <IoEllipsisHorizontalSharp />
+          </Button>
+        }
+      >
+        {getActions()
+          .filter((action) => !action.hidden?.(row))
+          .map((action) => (
+            <DropDown.Option
+              key={action.text}
+              onClick={(e) => {
+                e.stopPropagation();
+                action.onClick(row);
+              }}
+            >
+              {action.icon}
+              {action.text}
+            </DropDown.Option>
+          ))}
+      </DropDown>
+    </div>
   );
 }

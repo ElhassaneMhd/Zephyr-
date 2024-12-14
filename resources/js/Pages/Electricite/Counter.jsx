@@ -167,7 +167,7 @@ export default function Counter({ type, tables, history }) {
         // hack
         updateDefaultValues={(row) => {
           return {
-            id:row.id,
+            id: row.id,
             ...formDefaults,
             name: row.name,
             prev_date: getIsoDate(row.date).toFormat("yyyy-MM-dd'T'HH:mm:ss"),
@@ -197,12 +197,11 @@ export default function Counter({ type, tables, history }) {
               icon: <MdHistory />,
               onClick: (row) => navigate({ url: `/row/${type}/${row.id}/history` }),
             },
-            def.edit,
             def.delete,
           ],
         }}
         onAdd={(row) => {
-          const { name, date, index, consummation, puissance, cos } = row;
+          const { name, date, index, consummation, puissance, cos, table_name } = row;
           navigate({
             url: `${routeName}/store`,
             method: 'POST',
@@ -212,7 +211,7 @@ export default function Counter({ type, tables, history }) {
               index,
               consummation,
               ...(type === 'general' && { puissance, cos }),
-              table_name: current,
+              table_name,
               centre_id: user.mainCentre.id,
               counter: type,
             },
